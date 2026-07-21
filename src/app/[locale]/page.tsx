@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Link } from '@/i18n/navigation';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { ContactForm } from '@/components/ContactForm';
@@ -60,7 +61,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="hero-meta">
               <h1>
                 {heroLines.map((w, i) => (
-                  <span key={i} className={`split-word ${w.cls}`} data-d={i}><span>{w.text}</span></span>
+                  <Fragment key={i}>
+                    <span className={`split-word ${w.cls}`} data-d={i}><span>{w.text}</span></span>
+                    {i < heroLines.length - 1 ? ' ' : null}
+                  </Fragment>
                 ))}
               </h1>
               <div className="hero-roles">
@@ -349,7 +353,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               if (i === contactSerifIdx) cls += ' serif';
               if (i === contactAccIdx) cls += ' acc';
               return (
-                <span key={i} className={`split-word ${cls}`} data-d={i}><span>{w}</span></span>
+                <Fragment key={i}>
+                  <span className={`split-word ${cls}`} data-d={i}><span>{w}</span></span>
+                  {i < contactWords.length - 1 ? ' ' : null}
+                </Fragment>
               );
             })}
           </h2>
