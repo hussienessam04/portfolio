@@ -6,7 +6,6 @@ import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server
 import { routing, type AppLocale } from '@/i18n/routing';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { Preloader } from '@/components/Preloader';
 import { Fx } from '@/components/Fx';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ScrollFx } from '@/components/ScrollFx';
@@ -63,7 +62,6 @@ export default async function LocaleLayout({
       </head>
       <body className={`${inter.variable} ${tajawal.variable} ${fraunces.variable} ${mono.variable}`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Preloader />
           <Fx />
           <ScrollFx />
           <a href="#main" className="skip">{locale === 'ar' ? 'تخطّي إلى المحتوى' : 'Skip to content'}</a>
