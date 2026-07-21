@@ -61,7 +61,7 @@
   --gap-md: 20px;
   --gap-lg: 32px;
   --gap-xl: 56px;
-  --gap-2xl: clamp(96px, 12vw, 168px);
+  --gap-2xl: clamp(56px, 7vw, 96px);
   --container: 1320px;
   --gutter: clamp(20px, 4vw, 40px);
 

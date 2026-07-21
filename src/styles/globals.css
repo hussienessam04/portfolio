@@ -144,7 +144,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 
 /* ═══ layout ═══ */
 .container { max-inline-size: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
-.section { padding-block: var(--gap-2xl); position: relative; }
+.section { padding-block: clamp(48px, 6vw, 88px); position: relative; }
 .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .meta { font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
 .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); display: inline-flex; align-items: center; gap: 10px; margin: 0; }
@@ -263,7 +263,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } }
 
 /* ═══ tape — horizontal scroll section ═══ */
-.tape-wrap { background: var(--fg); color: var(--bg); padding-block: clamp(80px, 10vw, 140px); position: relative; overflow: hidden; }
+.tape-wrap { background: var(--fg); color: var(--bg); padding-block: clamp(48px, 6vw, 88px); position: relative; overflow: hidden; }
 .tape-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 40px; flex-wrap: wrap; padding-inline: var(--gutter); }
 .tape-head .eyebrow { color: color-mix(in oklab, var(--bg), transparent 50%); }
 .tape-head .eyebrow::before { background: currentColor; }
@@ -298,7 +298,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 @media (max-width: 860px) { .cap { grid-template-columns: 50px 1fr auto; gap: 16px; } .cap p { display: none; } }
 
 /* ═══ stats — dark section ═══ */
-.stats-wrap { background: var(--dark-bg); color: var(--dark-fg); padding-block: var(--gap-2xl); border-radius: var(--radius-xl); margin-inline: var(--gutter); margin-block: var(--gap-2xl); position: relative; overflow: hidden; }
+.stats-wrap { background: var(--dark-bg); color: var(--dark-fg); padding-block: clamp(56px, 6vw, 88px); border-radius: var(--radius-xl); margin-inline: var(--gutter); margin-block: clamp(40px, 5vw, 80px); position: relative; overflow: hidden; }
 .stats-wrap::before { content: ""; position: absolute; inset-block-start: -10%; inset-inline-end: -10%; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at center, color-mix(in oklab, var(--accent), transparent 70%), transparent 60%); pointer-events: none; }
 .stats-head { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: var(--gap-xl); position: relative; z-index: 1; padding-inline: clamp(20px, 4vw, 56px); }
 .stats-head p { font-size: 16px; }
@@ -314,7 +314,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 @media (max-width: 560px) { .stats-grid { grid-template-columns: 1fr; } }
 
 /* ═══ quote ═══ */
-.quote { text-align: center; padding-block: var(--gap-2xl); max-inline-size: 980px; margin-inline: auto; }
+.quote { text-align: center; padding-block: clamp(48px, 6vw, 88px); max-inline-size: 980px; margin-inline: auto; }
 .quote .eyebrow { justify-content: center; }
 .quote .eyebrow::before { display: none; }
 /* ponytail: 56px serif italic read as a billboard. Rescaled so the quote
@@ -325,7 +325,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 .quote mark::after { content: " \201D"; color: var(--accent); }
 
 /* ═══ contact ═══ */
-.contact { text-align: center; padding-block: var(--gap-2xl); position: relative; overflow: hidden; }
+.contact { text-align: center; padding-block: clamp(48px, 6vw, 88px); position: relative; overflow: hidden; }
 .contact .eyebrow { justify-content: center; }
 .contact .eyebrow::before { display: none; }
 /* ponytail: --fs-mega (72–200px) made 'Have something worth building well?'
@@ -391,7 +391,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 @media (max-width: 860px) { .process-step { grid-template-columns: 60px 1fr auto; } .process-step .text { display: none; } }
 
 /* ═══ TESTIMONIALS — paired marquee ═══ */
-.testimonials { padding-block: clamp(80px, 10vw, 140px); border-block: 1px solid var(--border); position: relative; overflow: hidden; background: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--surface) 60%, transparent) 100%); }
+.testimonials { padding-block: clamp(48px, 6vw, 88px); border-block: 1px solid var(--border); position: relative; overflow: hidden; background: linear-gradient(180deg, transparent 0%, color-mix(in oklab, var(--surface) 60%, transparent) 100%); }
 .testimonials-head { max-inline-size: var(--container); margin-inline: auto; padding-inline: var(--gutter); display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 48px; flex-wrap: wrap; }
 .testimonials-head h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 64px); font-weight: 600; line-height: 1.05; letter-spacing: -0.025em; margin-block-start: 12px; max-inline-size: 18ch; }
 .testimonials-head h2 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
@@ -472,7 +472,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
   .hero-bottom { margin-top: 40px; flex-direction: column; align-items: flex-start; gap: 16px; }
   .btn { padding: 12px 20px; font-size: 14px; }
   .container { padding-inline: 16px; }
-  .section { padding-block: clamp(64px, 12vw, 120px); }
+  .section { padding-block: clamp(40px, 8vw, 64px); }
   .marquee-track span { gap: 40px; }
   .bento { grid-template-columns: 1fr; gap: 12px; }
   .b-card { padding: 22px; }
@@ -481,6 +481,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
   .about { gap: 32px; }
   .about-p { font-size: 16px; }
   .about-quote { font-size: clamp(18px, 5vw, 24px); }
+  .tape-wrap { padding-block: clamp(40px, 8vw, 64px); }
   .tape-pin { height: 280px; }
   .tape-card { flex-basis: 260px; min-height: 220px; padding: 22px; }
   .tape-card h3 { font-size: 22px; }
@@ -488,7 +489,9 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
   .cap { grid-template-columns: 36px 1fr auto; gap: 12px; padding-block: 18px; }
   .cap .no { font-size: 12px; }
   .cap h3 { font-size: 18px; }
-  .stats-wrap { margin-inline: 12px; margin-block: 80px; border-radius: var(--radius-lg); padding-block: 80px; }
+  .stats-wrap { margin-inline: 12px; margin-block: 48px; border-radius: var(--radius-lg); padding-block: 56px; }
+  .quote { padding-block: clamp(40px, 8vw, 64px); }
+  .contact { padding-block: clamp(40px, 8vw, 64px); }
   .stats-grid { grid-template-columns: 1fr; }
   .stat { padding: 28px 24px; }
   .stat .n { font-size: clamp(48px, 14vw, 80px); }
