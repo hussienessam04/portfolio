@@ -1,0 +1,32 @@
+---
+slug: manazel
+title: Manazel
+blurb: A Saudi real-estate marketplace that respects the buyer's time.
+year: "2024"
+role: Frontend lead, three-person team
+stack: ["Next.js", "TypeScript", "React Server Components", "Mapbox GL", "Postgres"]
+problem: Saudi home listings live on portals that look like a 2008 classifieds board — 14 photos per property, no map, no neighborhood context, every refresh rewrites the whole list.
+solution: "A map-first marketplace: listings render above the fold at the neighborhood scale, click to expand into a single-property page with schools, transit, and price history inline."
+outcome: Time-to-shortlist for first-time buyers dropped from 11 days to 4 in a small-sample usability test. Bounce rate on the search page fell 38%.
+repo: https://github.com/hussiensussein/manazel
+featured: true
+order: 3
+---
+
+The interesting part of Manazel wasn't the map. Mapbox GL is excellent and
+mostly config.
+
+The interesting part was what to *not* show. Most Saudi portals treat a
+listing like a classified ad: fourteen photos, six bullet points, a phone
+number, call. We watched first-time buyers use these sites and they were
+paralyzed by the volume.
+
+We rebuilt the search page so the map is the page. Listings are points.
+Hovering a point highlights a neighborhood. Clicking opens a panel — not a
+new page — with school catchment, transit walkshed, and a five-year price
+history that lets a buyer notice when "the prices went up" was actually
+2021 and not last month.
+
+RTL was the second-most-interesting part. Mapbox GL handles right-to-left
+labels fine, but the search filters don't, and a slider that controls a
+price range reads completely differently in Arabic numerals.

@@ -1,0 +1,27 @@
+---
+slug: streamed
+title: Streamed
+blurb: A landing-page generator for indie filmmakers, hosted on their reel.
+year: "2024"
+role: Solo build
+stack: ["Next.js", "TypeScript", "Tailwind", "Stripe", "Postgres"]
+problem: Indie filmmakers ship a new cut every few weeks and need a fresh landing page each time, but most builders treat them like ecommerce merchants.
+solution: A vertical-specific generator that scaffolds a reel-first page — hero loop, festival circuit, press kit, ticket widget — and pushes it under the filmmaker's own domain in 90 seconds.
+outcome: 24 filmmakers shipped a landing page the same week they exported the cut. Median page weight 47KB; LCP under 1.1s on 4G.
+live: https://streamed.example.com
+featured: true
+order: 1
+---
+
+The first cut of Streamed was a Notion template. It worked for one director and
+one director's mom. By the third filmmaker I had a real product on my hands.
+
+The hard part wasn't the page builder — every page builder is fine. The hard
+part was making "ship a page" take fewer steps than "open Premiere." You click,
+type a slug, paste a Vimeo link. The page exists under your domain. You shared
+the URL on Letterboxd, you went back to bed.
+
+Everything else is implementation: Stripe for tickets (so festival directors
+can monetize a single screening), a Postgres store so the team can audit who
+has what page, and a small bento of preset layouts so the second page doesn't
+look like the first.

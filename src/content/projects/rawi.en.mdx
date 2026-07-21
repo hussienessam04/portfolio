@@ -1,0 +1,31 @@
+---
+slug: rawi
+title: Rawi
+blurb: A read-only Arabic poetry archive, built around the verse.
+year: "2023"
+role: Solo build, with two academic advisors
+stack: ["Astro", "MDX", "TypeScript", "SQLite", "Tailwind"]
+problem: Existing Arabic poetry archives are PDF collections scanned from 1980s typeset editions. They preserve the scholar's pagination; they destroy the verse.
+solution: A reading-first archive where every poem is a sequence of verses, each independently linkable, and every link ends on a verse — not a page number from a Beirut edition.
+outcome: 14,200 verses across 38 collections at launch. Academic advisors use it as a primary citation source in two university seminars.
+live: https://rawi.example.com
+repo: https://github.com/hussiensussein/rawi
+featured: true
+order: 5
+---
+
+Rawi started as a side project for a friend who teaches classical Arabic
+literature and could not link to a single verse in any online archive. Every
+link ended at "page 47" of a 1983 edition that only two libraries own.
+
+The data model is the simplest part of the whole project. A collection has
+poems; a poem has verses; a verse has text, meter, and rhyme. The hard part
+was the typography. Classical Arabic poetry sits inside a tight prosodic
+grid, and most web fonts treat it as a paragraph of prose. Rawi uses
+VocalType's Amiri at display scale and falls back to system UI at body scale,
+which costs nothing and looks respectful of the form.
+
+A future version will let readers cross-reference a single verse across the
+38 collections. That is a search problem, not a typing problem, and I am
+waiting until I have a corpus large enough that the search results are
+interesting.

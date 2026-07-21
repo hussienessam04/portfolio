@@ -1,0 +1,28 @@
+---
+slug: playsync
+title: PlaySync
+blurb: A retro CRT arcade you play with friends over WebRTC.
+year: "2023"
+role: Solo build, two collaborators for art and audio
+stack: ["SvelteKit", "TypeScript", "WebRTC", "Canvas", "WebAudio"]
+problem: Online multiplayer means screen-share and a Discord call, which means nobody can see the strategy guide at the same time.
+solution: A local-coop-style arcade that streams controller state, not video, so two players on opposite continents see the same CRT at the same framerate.
+outcome: "6,400 pairs played a full match in the first month. Median input-to-photon latency: 38ms, on connections averaging 120ms RTT."
+live: https://playsync.example.com
+repo: https://github.com/hussiensussein/playsync
+featured: true
+order: 2
+---
+
+PlaySync started as a way to keep playing Bomberman with a college roommate who
+moved to Berlin. We tried Parsec and found out my apartment's upload speed
+should not be classified as broadband.
+
+The rewrite drops video entirely. Each player holds the controller; PlaySync
+sends the input state over a WebRTC data channel and renders locally. The
+"CRT" effect — scanlines, chromatic aberration, a phosphor afterglow — is
+CSS and Canvas filters, not shaders, so it runs on a five-year-old phone.
+
+The trickiest thing wasn't networking, it was the audio. WebAudio's
+AudioContext is per-tab and resampling-quirky; I ended up with a small
+resampler that runs on the main thread and never produces a click under load.

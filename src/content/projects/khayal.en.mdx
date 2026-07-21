@@ -1,0 +1,27 @@
+---
+slug: khayal
+title: Khayal
+blurb: An AI storytelling toy that lets a six-year-old co-author a bedtime.
+year: "2025"
+role: Solo build
+stack: ["Next.js", "TypeScript", "OpenAI", "Web Speech API", "PWA"]
+problem: Voice-first AI toys either talk at kids or hallucinate plot holes that don't survive a re-read at 9pm.
+solution: A turn-by-turn co-author app. The child narrates a sentence; Khayal replies with one; nothing advances without an explicit "next." Saved stories are PDFs, not feeds.
+outcome: First 80 families used it nightly for an average of 23 days before the novelty curve flattened.
+featured: true
+order: 4
+---
+
+Khayal is named after the Arabic word for "imagination," and it started because
+my niece wanted me to make up a story about a rabbit on a train and I kept
+forgetting what the rabbit's name was.
+
+The design constraint is brutal: kids don't read, they listen, and their
+attention budget on a tablet is roughly four minutes. Khayal uses the Web
+Speech API for the voice and OpenAI for the model, but the model output is
+post-processed into a strict JSON schema so the rabbit's name is the rabbit's
+name by turn three, not "the rabbit" or "the bunny."
+
+It is also the first project I shipped as a PWA. No app store, no review
+queue, no five-year-old yelling "DOWNLOAD THE RABBIT APP" at a Saudi telco
+customer service rep.

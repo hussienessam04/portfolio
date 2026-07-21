@@ -1,0 +1,22 @@
+.footer {
+  border-block-start: 1px solid var(--border);
+  padding-block: var(--gap-xl);
+  margin-block-start: var(--gap-2xl);
+}
+
+.inner {
+  max-inline-size: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-md);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.line {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}

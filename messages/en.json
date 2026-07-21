@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "title": "Hussien Essam — Frontend Developer",
+    "description": "Frontend developer crafting elegant interfaces for clients in Egypt, UAE, and Saudi Arabia."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "languageToggle": "العربية"
+  },
+  "hero": {
+    "eyebrow": "Frontend Developer · Cairo",
+    "headline": "Crafting quiet, fast interfaces for clients from Cairo to Riyadh.",
+    "lede": "I build product surfaces that respect the user's time — bento-grade layouts, careful typography, zero JS until you need it.",
+    "ctaWork": "See selected work",
+    "ctaContact": "Start a project"
+  },
+  "stats": {
+    "years": "Years shipping",
+    "shipped": "Products shipped",
+    "clients": "Clients across MENA",
+    "languages": "Languages worked in"
+  },
+  "work": {
+    "title": "Selected work",
+    "subtitle": "Five products I led end-to-end. Each one a different kind of hard.",
+    "viewCase": "View case study",
+    "year": "Year",
+    "role": "Role",
+    "stack": "Stack",
+    "problem": "Problem",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "live": "Live",
+    "repo": "Repo",
+    "backToWork": "All work"
+  },
+  "about": {
+    "title": "About",
+    "body": "I'm Hussien — a frontend developer based in Cairo, working with product teams across the region. I care about typography, latency budgets, and not shipping a 400KB hero animation to a 4G phone."
+  },
+  "contact": {
+    "title": "Let's build something quiet and fast.",
+    "lede": "Reach out about a product role, freelance engagement, or just to compare notes.",
+    "emailLabel": "Email",
+    "githubLabel": "GitHub",
+    "linkedinLabel": "LinkedIn"
+  },
+  "footer": {
+    "copyright": "© {year} Hussien Essam. All rights reserved.",
+    "builtWith": "Built with Next.js. Deployed on Vercel."
+  }
+}

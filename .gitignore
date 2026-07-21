@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.env*.local
+.env
+*.log
+.DS_Store
+coverage
+.vercel
+.idea
+.vscode
+.turbo
+.playwright-mcp
+smoke-*.png
