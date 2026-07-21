@@ -19,9 +19,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const process = m.process as { eyebrow: string; title: string; subtitle: string; steps: Array<{ no: string; phase: string; duration: string; text: string }> };
   const stats = m.stats as { eyebrow: string; title: string; titleSerif: string; subtitle: string; items: Array<{ count: number; label: string; desc: string } | string>; lastLabel: string; lastDesc: string };
   const testimonials = m.testimonials as { eyebrow: string; items: Array<{ quote: string; name: string; role: string }> };
-  const quote = m.quote as { eyebrow: string; text: string; who: string };
   const contact = m.contact as { eyebrow: string; headline: string[]; headlineSerif: string; headlineAcc: string; ctaStart: string; ctaReview: string; elsewhere: string; channels: string[] };
-  const contactForm = m.contactForm as { eyebrow: string; nameLabel: string; namePlaceholder: string; emailLabel: string; emailPlaceholder: string; messageLabel: string; messagePlaceholder: string; submitLabel: string; submitHint: string };
+  const contactForm = m.contactForm as {
+    eyebrow: string; nameLabel: string; namePlaceholder: string;
+    emailLabel: string; emailPlaceholder: string;
+    typeLabel: string; typeOptions: Array<{ value: string; label: string }>;
+    scopeLabel: string; scopeOptions: Array<{ value: string; label: string }>;
+    timelineLabel: string; timelineOptions: Array<{ value: string; label: string }>;
+    messageLabel: string; messagePlaceholder: string;
+    submitLabel: string; submitHint: string;
+    privacyNote: string; responseNote: string;
+  };
 
   // hero head split-words (EN: "Frontend developer crafting interfaces that live and breathe.")
   const heroLines = locale === 'ar'
@@ -334,15 +342,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* QUOTE */}
-      <section className="section quote">
-        <div className="container">
-          <p className="eyebrow" style={{ justifyContent: 'center' }}>{quote.eyebrow}</p>
-          <mark className="reveal">{quote.text}</mark>
-          <span className="who">— {quote.who}</span>
-        </div>
-      </section>
-
       {/* CONTACT */}
       <section className="section contact" id="contact">
         <div className="container">
@@ -360,12 +359,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               );
             })}
           </h2>
-          <div className="contact-cta">
-            <a href="mailto:hello@hussien.dev" className="btn btn-solid magnetic" data-cursor="mail">
-              {contact.ctaStart}<span className="arr">→</span>
-            </a>
-            <a href="#work" className="btn btn-ghost magnetic" data-cursor="see">{contact.ctaReview}</a>
-          </div>
+          <ContactForm
+            eyebrow={contactForm.eyebrow}
+            nameLabel={contactForm.nameLabel}
+            namePlaceholder={contactForm.namePlaceholder}
+            emailLabel={contactForm.emailLabel}
+            emailPlaceholder={contactForm.emailPlaceholder}
+            typeLabel={contactForm.typeLabel}
+            typeOptions={contactForm.typeOptions as Array<{ value: string; label: string }>}
+            scopeLabel={contactForm.scopeLabel}
+            scopeOptions={contactForm.scopeOptions as Array<{ value: string; label: string }>}
+            timelineLabel={contactForm.timelineLabel}
+            timelineOptions={contactForm.timelineOptions as Array<{ value: string; label: string }>}
+            messageLabel={contactForm.messageLabel}
+            messagePlaceholder={contactForm.messagePlaceholder}
+            submitLabel={contactForm.submitLabel}
+            submitHint={contactForm.submitHint}
+            privacyNote={contactForm.privacyNote}
+            responseNote={contactForm.responseNote}
+          />
           <div className="contact-channels">
             <span>{contact.elsewhere}</span>
             <a href="https://github.com/flavasava2022" target="_blank" rel="noopener" data-cursor="open">{(contact.channels as string[])[0]}</a>
@@ -373,17 +385,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <a href="#" data-cursor="cv">{(contact.channels as string[])[2]}</a>
             <a href="mailto:hello@hussien.dev" data-cursor="mail">{(contact.channels as string[])[3]}</a>
           </div>
-          <ContactForm
-            eyebrow={contactForm.eyebrow}
-            nameLabel={contactForm.nameLabel}
-            namePlaceholder={contactForm.namePlaceholder}
-            emailLabel={contactForm.emailLabel}
-            emailPlaceholder={contactForm.emailPlaceholder}
-            messageLabel={contactForm.messageLabel}
-            messagePlaceholder={contactForm.messagePlaceholder}
-            submitLabel={contactForm.submitLabel}
-            submitHint={contactForm.submitHint}
-          />
         </div>
       </section>
     </>

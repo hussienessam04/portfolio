@@ -151,10 +151,32 @@
     "namePlaceholder": "سلمى حسن",
     "emailLabel": "البريد",
     "emailPlaceholder": "you@company.com",
-    "messageLabel": "ما الذي تعمل عليه",
+    "typeLabel": "ما نوع المشروع؟",
+    "typeOptions": [
+      { "value": "new", "label": "بناء جديد" },
+      { "value": "existing", "label": "عمل قائم" },
+      { "value": "exploring", "label": "استكشاف فقط" }
+    ],
+    "scopeLabel": "ماذا تحتاج؟",
+    "scopeOptions": [
+      { "value": "site", "label": "موقع تسويقي" },
+      { "value": "app", "label": "تطبيق ويب" },
+      { "value": "motion", "label": "حركة / تفاعل" },
+      { "value": "audit", "label": "تدقيق أداء" }
+    ],
+    "timelineLabel": "الجدول الزمني",
+    "timelineOptions": [
+      { "value": "asap", "label": "في أسرع وقت" },
+      { "value": "month", "label": "خلال شهر" },
+      { "value": "quarter", "label": "هذا الربع" },
+      { "value": "exploring", "label": "استكشاف فقط" }
+    ],
+    "messageLabel": "أخبرني المزيد",
     "messagePlaceholder": "منتج، مشكلة، موعد نهائي — أي شيء تودّ مشاركته.",
     "submitLabel": "أرسل عبر البريد",
-    "submitHint": "يفتح تطبيق البريد — بلا خادم، بلا تتبّع."
+    "submitHint": "يفتح تطبيق البريد — بلا خادم، بلا تتبّع.",
+    "privacyNote": "رسالتك تصل إلى بريدي مباشرة. بلا CRM، بلا نشرة، بلا طرف ثالث.",
+    "responseNote": "أرد خلال يوم عمل واحد، غالباً أسرع."
   },
   "availability": {
     "available": "متاح",

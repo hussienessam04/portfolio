@@ -185,10 +185,32 @@
     "namePlaceholder": "Salma Hassan",
     "emailLabel": "Email",
     "emailPlaceholder": "you@company.com",
-    "messageLabel": "What you're working on",
+    "typeLabel": "What kind of project?",
+    "typeOptions": [
+      { "value": "new", "label": "New build" },
+      { "value": "existing", "label": "Existing work" },
+      { "value": "exploring", "label": "Just exploring" }
+    ],
+    "scopeLabel": "What do you need?",
+    "scopeOptions": [
+      { "value": "site", "label": "Marketing site" },
+      { "value": "app", "label": "Web app" },
+      { "value": "motion", "label": "Motion / interaction" },
+      { "value": "audit", "label": "Performance audit" }
+    ],
+    "timelineLabel": "Timeline",
+    "timelineOptions": [
+      { "value": "asap", "label": "ASAP" },
+      { "value": "month", "label": "Within a month" },
+      { "value": "quarter", "label": "This quarter" },
+      { "value": "exploring", "label": "Just exploring" }
+    ],
+    "messageLabel": "Tell me more",
     "messagePlaceholder": "A product, a problem, a deadline — anything you'd like to share.",
     "submitLabel": "Send via email",
-    "submitHint": "Opens your mail client — no server, no tracking."
+    "submitHint": "Opens your mail client — no server, no tracking.",
+    "privacyNote": "Your message goes directly to my inbox. No CRM, no newsletter, no third party.",
+    "responseNote": "I reply within one business day, usually faster."
   },
   "availability": {
     "available": "Available",
