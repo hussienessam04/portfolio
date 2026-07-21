@@ -1,95 +1,314 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { getAllProjects } from '@/lib/projects';
-import { ProjectCard } from '@/components/ProjectCard';
-import { HeroMotionDynamic } from '@/components/HeroMotionDynamic';
-import homeStyles from './page.module.css';
-
-const STAT_KEYS = ['years', 'shipped', 'clients', 'languages'] as const;
-const STAT_VALUES = ['6+', '14', '11', '3'] as const;
+import { getMessages, setRequestLocale } from 'next-intl/server';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [t, projects] = await Promise.all([
-    getTranslations(),
-    getAllProjects(locale as 'en' | 'ar'),
-  ]);
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
+  const m = (await getMessages()) as Record<string, unknown>;
+  const hero = m.hero as {
+    available: string; roles: string[]; phrases: string[]; lead: string;
+    ctaStart: string; ctaSee: string; location: string; multilingual: string; scroll: string;
+  };
+  const marquee = m.marquee as string[];
+  const about = m.about as { eyebrow: string; title: string; p1: string; p2: string; quote: string; facts: Array<{ k: string; v: string }> };
+  const work = m.work as { eyebrow: string; title: string; subtitle: string; cards: Array<{ slug: string; no: string; title: string; desc?: string; art: string; tags: string[]; bgDark?: boolean }> };
+  const tape = m.tape as { eyebrow: string; title: string; titleSerif: string; cta: string; cards: Array<{ no: string; title: string; pat: Record<string, string> }> };
+  const caps = m.capabilities as { eyebrow: string; title: string; subtitle: string; items: Array<{ no: string; title: string; titleSerif: string; desc: string }> };
+  const stats = m.stats as { eyebrow: string; title: string; titleSerif: string; subtitle: string; items: Array<{ count: number; label: string; desc: string } | string>; lastLabel: string; lastDesc: string };
+  const quote = m.quote as { eyebrow: string; text: string; who: string };
+  const contact = m.contact as { eyebrow: string; headline: string[]; headlineSerif: string; headlineAcc: string; ctaStart: string; ctaReview: string; elsewhere: string; channels: string[] };
+
+  // hero head split-words (EN: "Frontend developer crafting interfaces that live and breathe.")
+  const heroLines = locale === 'ar'
+    ? [
+        { cls: 'lt', text: 'مطوّر' },
+        { cls: 'lt', text: 'واجهات' },
+        { cls: 'lt serif', text: 'يصنع' },
+        { cls: 'lt', text: 'تجارب' },
+        { cls: 'lt', text: 'رقمية' },
+        { cls: 'lt serif', text: 'حيّة' },
+        { cls: 'lt', text: 'وتُحَسّ' },
+        { cls: 'lt', text: 'بالتفاصيل.' },
+      ]
+    : [
+        { cls: 'lt', text: 'Frontend' },
+        { cls: 'lt', text: 'developer' },
+        { cls: 'lt serif', text: 'crafting' },
+        { cls: 'lt', text: 'interfaces' },
+        { cls: 'lt', text: 'that' },
+        { cls: 'lt serif', text: 'live' },
+        { cls: 'lt', text: 'and' },
+        { cls: 'lt', text: 'breathe.' },
+      ];
+
+  // Contact head (5 words)
+  const contactWords = contact.headline as string[];
+  const contactSerifIdx = contactWords.findIndex((w) => w === contact.headlineSerif);
+  const contactAccIdx = contactWords.findIndex((w) => w === contact.headlineAcc);
 
   return (
-    <div className={homeStyles.page}>
-      {/* Hero */}
-      <section className={homeStyles.hero} aria-labelledby="hero-heading">
-        <HeroMotionDynamic>
-          <p data-hero-eyebrow className={homeStyles.eyebrow}>{t('hero.eyebrow')}</p>
-          <h1 id="hero-heading" className={homeStyles.headline}>
-            <span data-hero-line>{t('hero.headline')}</span>
-          </h1>
-          <p data-hero-lede className={homeStyles.lede}>{t('hero.lede')}</p>
-          <div className={homeStyles.ctaRow}>
-            <Link data-hero-cta href="/#work" className={homeStyles.ctaPrimary}>{t('hero.ctaWork')}</Link>
-            <Link data-hero-cta href="/#contact" className={homeStyles.ctaSecondary}>{t('hero.ctaContact')}</Link>
+    <>
+      {/* HERO */}
+      <section className="section hero" id="top">
+        <div className="hero-orb" aria-hidden="true" />
+        <div className="container">
+          <div className="hero-grid">
+            <div className="hero-meta">
+              <div className="hero-meta-top">
+                <span className="dot" />
+                <span className="meta">{hero.available}</span>
+              </div>
+              <h1>
+                {heroLines.map((w, i) => (
+                  <span key={i} className={`split-word ${w.cls}`} data-d={i}><span>{w.text}</span></span>
+                ))}
+              </h1>
+              <div className="hero-roles">
+                {(hero.roles as string[]).map((r: string, i: number) => (
+                  <span key={r}>
+                    {i > 0 && <span className="sep"> / </span>}
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <aside className="hero-side reveal" data-d="2">
+              <div className="rotator" aria-live="polite">
+                <div className="phrases" id="phrases">
+                  {(hero.phrases as string[]).map((p: string, i: number) => (
+                    <div key={i} className={`phrase${i === 0 ? ' is-on' : ''}`}>
+                      <span><span>{p}</span></span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="lead">{hero.lead}</p>
+              <div className="hero-cta">
+                <a href="#contact" className="btn btn-solid magnetic" data-cursor="hire">
+                  {hero.ctaStart}<span className="arr">→</span>
+                </a>
+                <a href="#work" className="btn btn-ghost magnetic" data-cursor="see">{hero.ctaSee}</a>
+              </div>
+            </aside>
           </div>
-        </HeroMotionDynamic>
-      </section>
-
-      {/* Bento */}
-      <section className={homeStyles.bento} aria-label="Highlights">
-        <article className={`${homeStyles.cell} ${homeStyles.cellAbout}`} id="about">
-          <span className={homeStyles.cellEyebrow}>{t('about.title')}</span>
-          <p className={homeStyles.aboutBody}>{t('about.body')}</p>
-        </article>
-
-        <article className={`${homeStyles.cell} ${homeStyles.cellStats}`}>
-          <span className={homeStyles.cellEyebrow}>{t('stats.years')} · {t('stats.shipped')} · {t('stats.clients')}</span>
-          <ul className={homeStyles.statsList}>
-            {STAT_KEYS.map((key, i) => (
-              <li key={key} className={homeStyles.stat}>
-                <span className={homeStyles.statValue}>{STAT_VALUES[i]}</span>
-                <span className={homeStyles.statLabel}>{t(`stats.${key}`)}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className={`${homeStyles.cell} ${homeStyles.cellFeatured}`}>
-          <span className={homeStyles.cellEyebrow}>{t('work.title')}</span>
-          <ul className={homeStyles.featuredList}>
-            {featured.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/work/${p.slug}`} className={homeStyles.featuredLink}>
-                  <span className={homeStyles.featuredTitle}>{p.title}</span>
-                  <span className={homeStyles.featuredBlurb}>{p.blurb}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article className={`${homeStyles.cell} ${homeStyles.cellStatus}`} id="contact">
-          <span className={homeStyles.cellEyebrow}>{t('contact.title')}</span>
-          <p className={homeStyles.contactBody}>{t('contact.lede')}</p>
-          <ul className={homeStyles.contactLinks}>
-            <li><a href="mailto:hello@hussien.example.com">hello@hussien.example.com</a></li>
-            <li><a href="https://github.com/hussiensussein" rel="noreferrer">{t('contact.githubLabel')}</a></li>
-            <li><a href="https://www.linkedin.com/in/hussiensussein/" rel="noreferrer">{t('contact.linkedinLabel')}</a></li>
-          </ul>
-        </article>
-      </section>
-
-      {/* Selected Work */}
-      <section id="work" className={homeStyles.work} aria-labelledby="work-heading">
-        <header className={homeStyles.workHead}>
-          <h2 id="work-heading" className={homeStyles.workTitle}>{t('work.title')}</h2>
-          <p className={homeStyles.workSubtitle}>{t('work.subtitle')}</p>
-        </header>
-        <div className={homeStyles.workGrid}>
-          {projects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
+          <div className="hero-bottom">
+            <div className="meta">
+              {hero.location}<br />
+              <strong>1998</strong> · {hero.multilingual}
+            </div>
+            <span className="scroll-hint"><span className="line" />{hero.scroll}</span>
+          </div>
         </div>
       </section>
-    </div>
+
+      {/* MARQUEE */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {(marquee as string[]).map((m, i) => <span key={`a${i}`}>{m}</span>)}
+          {(marquee as string[]).map((m, i) => <span key={`b${i}`}>{m}</span>)}
+        </div>
+      </div>
+
+      {/* ABOUT */}
+      <section className="section" id="about">
+        <div className="container">
+          <div className="about">
+            <aside className="about-side reveal">
+              <p className="eyebrow">{about.eyebrow}</p>
+              <h2>{about.title}</h2>
+            </aside>
+            <div className="about-body">
+              <p className="about-p reveal">{about.p1}</p>
+              <p className="about-p reveal" data-d="1">{about.p2}</p>
+              <blockquote className="about-quote reveal" data-d="2">{about.quote}</blockquote>
+              <div className="about-grid">
+                {(about.facts as Array<{ k: string; v: string }>).map((f, i) => (
+                  <div key={i} className="about-fact reveal" data-d={i < 2 ? 3 : 4}>
+                    <span className="k">{f.k}</span>
+                    <span className="v">{f.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BENTO WORK */}
+      <section className="section" id="work">
+        <div className="container">
+          <div className="work-head">
+            <div>
+              <p className="eyebrow">{work.eyebrow}</p>
+              <h2>{work.title}</h2>
+            </div>
+            <p>{work.subtitle}</p>
+          </div>
+
+          <div className="bento">
+            {(work.cards as Array<{
+              slug: string; no: string; title: string; desc?: string; art: string;
+              tags: string[]; bgDark?: boolean;
+            }>).map((c, i) => {
+              const variant = i === 0 ? 'b-feature' : i === 1 || i === 2 ? 'b-mid' : 'b-wide';
+              const dark = c.bgDark ? ' bg-dark' : '';
+              return (
+                <Link
+                  key={c.slug}
+                  href={`/work/${c.slug}`}
+                  className={`b-card ${variant}${dark} reveal magnetic`}
+                  data-cursor="open"
+                  data-d={(i % 4) + 1}
+                >
+                  <div className="b-head">
+                    <span className="no">{c.no}</span>
+                    <span className="arrow">→</span>
+                  </div>
+                  <h3>{c.title}</h3>
+                  {c.desc && <p>{c.desc}</p>}
+                  <div className="art">{c.art}</div>
+                  <div className="tags">
+                    {c.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* TAPE */}
+      <section className="tape-wrap" id="tape">
+        <div className="tape-head container">
+          <p className="eyebrow">{tape.eyebrow}</p>
+          <h2>
+            {tape.title}
+            <span className="serif"> {tape.titleSerif}</span>
+          </h2>
+          <span className="tape-cta">{tape.cta}</span>
+        </div>
+        <div className="tape-pin" id="tapePin">
+          <div className="tape-track" id="tapeTrack">
+            {(tape.cards as Array<{ no: string; title: string; pat: Record<string, string> }>).map((tc, i) => (
+              <article key={i} className="tape-card">
+                <span className="num">{tc.no}</span>
+                <h3>{tc.title}</h3>
+                <p className="pat">
+                  {Object.entries(tc.pat).map(([k, v], j) => (
+                    <span key={k}>
+                      {j > 0 && <span> · </span>}
+                      <strong>{k}</strong> — {v}
+                    </span>
+                  ))}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CAPABILITIES */}
+      <section className="section" id="capabilities">
+        <div className="container">
+          <div className="caps-head">
+            <div>
+              <p className="eyebrow">{caps.eyebrow}</p>
+              <h2>{caps.title}</h2>
+            </div>
+            <p>{caps.subtitle}</p>
+          </div>
+          <div className="caps">
+            {(caps.items as Array<{ no: string; title: string; titleSerif: string; desc: string }>).map((c) => (
+              <div key={c.no} className="cap reveal magnetic" data-cursor="read">
+                <span className="no">{c.no}</span>
+                <h3>
+                  {c.title.replace(c.titleSerif, '')}
+                  <span className="serif">{c.titleSerif}</span>
+                </h3>
+                <p>{c.desc}</p>
+                <span className="ar">→</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="stats-wrap" id="stats">
+        <div className="stats-head">
+          <div>
+            <p className="eyebrow">{stats.eyebrow}</p>
+            <h2>
+              {stats.title}
+              <span className="serif"> {stats.titleSerif}</span>
+            </h2>
+          </div>
+          <p style={{ color: 'var(--dark-muted)' }}>{stats.subtitle}</p>
+        </div>
+        <div className="stats-grid">
+          {(stats.items as Array<{ count: number; label: string; desc: string } | string>).map((s, i) => {
+            if (typeof s === 'string') {
+              return (
+                <div key={i} className="stat reveal" data-d={i + 1}>
+                  <span className="n num">
+                    <span className="acc">99</span>
+                    <span style={{ color: 'var(--dark-muted)', fontSize: '0.4em' }}>/</span>
+                    <span className="acc">100</span>
+                  </span>
+                  <span className="lbl">{stats.lastLabel}</span>
+                  <span className="d">{stats.lastDesc}</span>
+                </div>
+              );
+            }
+            return (
+              <div key={i} className="stat reveal" data-d={i + 1}>
+                <span className="n num"><span className="acc num" data-count={s.count}>0</span></span>
+                <span className="lbl">{s.label}</span>
+                <span className="d">{s.desc}</span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* QUOTE */}
+      <section className="section quote">
+        <div className="container">
+          <p className="eyebrow" style={{ justifyContent: 'center' }}>{quote.eyebrow}</p>
+          <mark className="reveal">{quote.text}</mark>
+          <span className="who">— {quote.who}</span>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section className="section contact" id="contact">
+        <div className="container">
+          <p className="eyebrow">{contact.eyebrow}</p>
+          <h2>
+            {contactWords.map((w: string, i: number) => {
+              let cls = 'lt';
+              if (i === contactSerifIdx) cls += ' serif';
+              if (i === contactAccIdx) cls += ' acc';
+              return (
+                <span key={i} className={`split-word ${cls}`} data-d={i}><span>{w}</span></span>
+              );
+            })}
+          </h2>
+          <div className="contact-cta">
+            <a href="mailto:hello@hussien.dev" className="btn btn-solid magnetic" data-cursor="mail">
+              {contact.ctaStart}<span className="arr">→</span>
+            </a>
+            <a href="#work" className="btn btn-ghost magnetic" data-cursor="see">{contact.ctaReview}</a>
+          </div>
+          <div className="contact-channels">
+            <span>{contact.elsewhere}</span>
+            <a href="https://github.com/flavasava2022" target="_blank" rel="noopener" data-cursor="open">{(contact.channels as string[])[0]}</a>
+            <a href="#" data-cursor="ln">{(contact.channels as string[])[1]}</a>
+            <a href="#" data-cursor="cv">{(contact.channels as string[])[2]}</a>
+            <a href="mailto:hello@hussien.dev" data-cursor="mail">{(contact.channels as string[])[3]}</a>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

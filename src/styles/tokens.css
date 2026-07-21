@@ -1,8 +1,7 @@
-/* ponytail: design tokens copied verbatim from the Open Design artifact
- * (frontend-portfolio-2.html). Dark is the default surface.
- * Light flips via [data-theme="light"] on <html>.
- * The theme script that flips it lives in app/[locale]/layout.tsx (pre-paint). */
-
+/* ════ DARK default — light is opt-in via [data-theme="light"] ════
+ * ponytail: Neutral Modern is the brand contract, dark is a surface-level
+ * override bolted on for the portfolio. If a dark variant ships upstream,
+ * swap the light block for the brand's official light tokens. */
 :root {
   --bg: #0a0a0b;
   --surface: #131316;
@@ -17,12 +16,12 @@
   --accent-soft: color-mix(in oklab, var(--accent), transparent 88%);
   --fg-soft: color-mix(in oklab, var(--fg), transparent 94%);
   --cursor: #ededee;
+  /* dark-* tokens: slight lift so the stats panel and bg-dark cards still read as inset */
   --dark-bg: #040406;
   --dark-fg: #ededee;
   --dark-muted: #8c8c95;
   --dark-border: color-mix(in oklab, var(--dark-fg), transparent 88%);
 }
-
 :root[data-theme="light"] {
   --bg: #fafafa;
   --surface: #ffffff;
@@ -62,19 +61,17 @@
   --gap-md: 20px;
   --gap-lg: 32px;
   --gap-xl: 56px;
-  --gap-2xl: 96px;
+  --gap-2xl: clamp(96px, 12vw, 168px);
+  --container: 1320px;
+  --gutter: clamp(20px, 4vw, 40px);
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius: 14px;
+  --radius-lg: 24px;
   --radius-xl: 32px;
 
-  --container: 1320px;
-
-  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
-
-  --duration-fast: 180ms;
-  --duration-base: 320ms;
-  --duration-slow: 640ms;
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+  --motion: 320ms;
+  --motion-slow: 600ms;
 }

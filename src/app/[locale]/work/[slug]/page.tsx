@@ -5,10 +5,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { Link } from '@/i18n/navigation';
 import { getAllSlugs, getProject } from '@/lib/projects';
-import { ProjectCover } from '@/components/ProjectCover';
 import { routing } from '@/i18n/routing';
 import { useMDXComponents } from '@/mdx-components';
-import styles from './page.module.css';
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs();
@@ -46,58 +44,55 @@ export default async function ProjectPage({
   const components = useMDXComponents({});
 
   return (
-    <article className={styles.article}>
-      <Link href="/#work" className={styles.back}>{t('backToWork')} ←</Link>
+    <article className="container section" style={{ maxInlineSize: 900 }}>
+      <Link href="/#work" className="meta" style={{ display: 'inline-block', marginBlockEnd: 24 }}>
+        ← {t('backToWork')}
+      </Link>
+      <p className="eyebrow" style={{ color: 'var(--muted)' }}>
+        {frontmatter.year} · {frontmatter.role}
+      </p>
+      <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'var(--fs-h2)', lineHeight: 1, letterSpacing: '-0.025em', marginBlock: '12px 16px' }}>
+        {frontmatter.title}
+      </h1>
+      <p style={{ fontSize: 'var(--fs-lead)', color: 'var(--muted)', maxInlineSize: '60ch', marginBlockEnd: 32 }}>
+        {frontmatter.blurb}
+      </p>
 
-      <header className={styles.head}>
-        <p className={styles.eyebrow}>{frontmatter.year} · {frontmatter.role}</p>
-        <h1 className={styles.title}>{frontmatter.title}</h1>
-        <p className={styles.blurb}>{frontmatter.blurb}</p>
-      </header>
+      <div className="meta" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBlockEnd: 32 }}>
+        {frontmatter.stack.map((s) => (
+          <span key={s} style={{ border: '1px solid var(--border)', borderRadius: 999, padding: '4px 10px', fontSize: 11 }}>
+            {s}
+          </span>
+        ))}
+      </div>
 
-      <ProjectCover slug={frontmatter.slug} label={frontmatter.year} />
+      <div className="b-card reveal" style={{ padding: 32, marginBlockEnd: 32 }}>
+        <p className="meta" style={{ marginBlockEnd: 8 }}>{t('problem')}</p>
+        <p style={{ marginBlockEnd: 20 }}>{frontmatter.problem}</p>
+        <p className="meta" style={{ marginBlockEnd: 8 }}>{t('solution')}</p>
+        <p style={{ marginBlockEnd: 20 }}>{frontmatter.solution}</p>
+        <p className="meta" style={{ marginBlockEnd: 8 }}>{t('outcome')}</p>
+        <p>{frontmatter.outcome}</p>
+      </div>
 
-      <div className={styles.metaGrid}>
-        <div>
-          <span className={styles.metaLabel}>{t('stack')}</span>
-          <ul className={styles.metaList}>
-            {frontmatter.stack.map((s) => (
-              <li key={s} className={styles.metaChip}>{s}</li>
-            ))}
-          </ul>
-        </div>
+      <div className="case-prose">
+        <MDXRemote source={body} components={components} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
+      </div>
+
+      <div style={{ display: 'flex', gap: 16, marginBlockStart: 32 }}>
         {frontmatter.live && (
-          <a className={styles.metaLink} href={frontmatter.live} rel="noreferrer">
-            {t('live')} ↗
-          </a>
+          <a className="btn btn-ghost magnetic" href={frontmatter.live} rel="noreferrer">{t('live')} →</a>
         )}
         {frontmatter.repo && (
-          <a className={styles.metaLink} href={frontmatter.repo} rel="noreferrer">
-            {t('repo')} ↗
-          </a>
+          <a className="btn btn-ghost magnetic" href={frontmatter.repo} rel="noreferrer">{t('repo')} →</a>
         )}
       </div>
 
-      <section className={styles.body}>
-        <div className={styles.prose}>
-          <MDXRemote source={body} components={components} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
-        </div>
-
-        <aside className={styles.aside}>
-          <div>
-            <span className={styles.metaLabel}>{t('problem')}</span>
-            <p>{frontmatter.problem}</p>
-          </div>
-          <div>
-            <span className={styles.metaLabel}>{t('solution')}</span>
-            <p>{frontmatter.solution}</p>
-          </div>
-          <div>
-            <span className={styles.metaLabel}>{t('outcome')}</span>
-            <p>{frontmatter.outcome}</p>
-          </div>
-        </aside>
-      </section>
+      <style>{`
+        .case-prose p { font-size: 17px; line-height: 1.7; margin-block: 0 1em; }
+        .case-prose h2 { font-family: var(--font-serif); font-size: var(--fs-h3); margin-block: 1.5em 0.5em; }
+        .case-prose a { border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+      `}</style>
     </article>
   );
 }

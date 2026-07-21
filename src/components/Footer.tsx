@@ -1,15 +1,18 @@
-import { getTranslations } from 'next-intl/server';
-import styles from './Footer.module.css';
+import { getMessages } from 'next-intl/server';
 
 export async function Footer() {
-  const t = await getTranslations('footer');
-  const year = new Date().getFullYear();
+  const m = (await getMessages()) as Record<string, unknown>;
+  const ft = m.footer as { location: string; backToTop: string; settings: string };
+
   return (
-    <footer className={styles.footer}>
-      <div className={styles.inner}>
-        <p className={styles.line}>{t('copyright', { year })}</p>
-        <p className={styles.line}>{t('builtWith')}</p>
-      </div>
+    <footer className="container pagefoot" data-od-id="footer">
+      <span>
+        © <span id="year">2026</span> Hussien Essam · {ft.location}
+      </span>
+      <span className="ctrls">
+        <a href="#top" data-cursor="top">{ft.backToTop}</a>
+        <a href="#contact" data-cursor="set">{ft.settings}</a>
+      </span>
     </footer>
   );
 }

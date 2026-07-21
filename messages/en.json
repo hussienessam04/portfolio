@@ -1,54 +1,161 @@
 {
   "meta": {
-    "title": "Hussien Essam — Frontend Developer",
+    "title": "Hussien Essam · Frontend Developer",
     "description": "Frontend developer crafting elegant interfaces for clients in Egypt, UAE, and Saudi Arabia."
   },
   "nav": {
-    "work": "Work",
     "about": "About",
+    "work": "Work",
+    "services": "Services",
     "contact": "Contact",
-    "languageToggle": "العربية"
+    "themeToggle": "Toggle theme",
+    "menu": "menu",
+    "skipToContent": "Skip to content"
   },
   "hero": {
-    "eyebrow": "Frontend Developer · Cairo",
-    "headline": "Crafting quiet, fast interfaces for clients from Cairo to Riyadh.",
-    "lede": "I build product surfaces that respect the user's time — bento-grade layouts, careful typography, zero JS until you need it.",
-    "ctaWork": "See selected work",
-    "ctaContact": "Start a project"
+    "available": "Available for Q2 · Cairo / remote",
+    "roles": ["Frontend", "Interaction", "Motion"],
+    "phrases": [
+      "I build product surfaces that feel calm under pressure.",
+      "I choreograph motion that earns its place.",
+      "I prototype fast, then ship slower, then better.",
+      "I work in English, Arabic, and a quiet third language called taste."
+    ],
+    "lead": "Hussien Essam — a frontend developer with six years building for startups and studios between Cairo, Dubai, and Riyadh. Bilingual by default, motion-first by habit.",
+    "ctaStart": "Start a project",
+    "ctaSee": "See work",
+    "location": "Cairo → Dubai → Riyadh",
+    "multilingual": "Multilingual",
+    "scroll": "scroll"
   },
-  "stats": {
-    "years": "Years shipping",
-    "shipped": "Products shipped",
-    "clients": "Clients across MENA",
-    "languages": "Languages worked in"
+  "marquee": ["Design systems", "Motion choreography", "Prototyping", "Performance budgets", "RTL & Arabic web", "Headless commerce"],
+  "about": {
+    "eyebrow": "About",
+    "title": "A practice, not a pipeline.",
+    "p1": "I'm Hussien, a frontend developer who treats detail as the deliverable. I work with product teams in Egypt, the UAE, and Saudi Arabia shipping product surfaces that have to earn their weight on launch day and still look composed a year later.",
+    "p2": "My method is simple: decide the feeling first, write the interaction, then write the code. Whatever the framework, the rules still hold — restraint, rhythm, warmth.",
+    "quote": "Detail is not decoration — it is the only promise a product can keep.",
+    "facts": [
+      { "k": "Based in", "v": "Cairo, EG" },
+      { "k": "Working hours", "v": "09:00 — 19:00 GMT+2" },
+      { "k": "Stack", "v": "React · Next.js · GSAP · Three" },
+      { "k": "Languages", "v": "English · Arabic" }
+    ]
   },
   "work": {
-    "title": "Selected work",
-    "subtitle": "Five products I led end-to-end. Each one a different kind of hard.",
-    "viewCase": "View case study",
-    "year": "Year",
-    "role": "Role",
-    "stack": "Stack",
+    "eyebrow": "Selected work · 2022 — present",
+    "title": "Builds that quietly do their job.",
+    "subtitle": "Polished placeholder content — swap with your real shipped projects when ready.",
+    "cards": [
+      {
+        "slug": "khayal",
+        "no": "— 01 / Studio project",
+        "title": "Khayal — Arabic typography studio site",
+        "desc": "A bilingual wordmark for a regional type foundry. Liquid headline type, variable-weight axis, RTL proof gallery.",
+        "art": "Kh.",
+        "tags": ["Next.js", "Variable type", "RTL", "2024"]
+      },
+      {
+        "slug": "streamed",
+        "no": "— 02 / Mobile app",
+        "title": "Streamed — sports player",
+        "art": "Sv",
+        "tags": ["React Native", "HLS", "Android TV"]
+      },
+      {
+        "slug": "manazel",
+        "no": "— 03 / Storefront",
+        "title": "Manazel — modular product cards",
+        "art": "M.",
+        "tags": ["Astro", "Sanity"]
+      },
+      {
+        "slug": "playsync",
+        "no": "— 04 / Tool",
+        "title": "PlaySync — Point-of-Sale interface",
+        "desc": "Touch-first cashier surface with offline-first sync, Arabic-first typographic hierarchy, and quantity keys at 64px.",
+        "art": "P/",
+        "tags": ["Vue 3", "PWA", "Offline-first", "2025"],
+        "bgDark": true
+      },
+      {
+        "slug": "rawi",
+        "no": "— 05 / Editorial",
+        "title": "Rawi — long-form reading app",
+        "desc": "Bilingual reader with adjustable Arabic kashida and a per-font baseline grid. Mag-style typography on dark.",
+        "art": "ر.",
+        "tags": ["SvelteKit", "Variable fonts"]
+      }
+    ],
+    "backToWork": "All work",
     "problem": "Problem",
     "solution": "Solution",
     "outcome": "Outcome",
     "live": "Live",
-    "repo": "Repo",
-    "backToWork": "All work"
+    "repo": "Repo"
   },
-  "about": {
-    "title": "About",
-    "body": "I'm Hussien — a frontend developer based in Cairo, working with product teams across the region. I care about typography, latency budgets, and not shipping a 400KB hero animation to a 4G phone."
+  "tape": {
+    "eyebrow": "Now / Up next",
+    "title": "Currently",
+    "titleSerif": "building.",
+    "cta": "Drag the strip — or keep scrolling",
+    "cards": [
+      { "no": "— 06 / Sandbox", "title": "Mawrid — Arabic-first motion library", "pat": { "Phase": "alpha", "Opens": "Q3" } },
+      { "no": "— 07 / Personal", "title": "A field journal of MENA-front-end design", "pat": { "Format": "essays", "Length": "ongoing" } },
+      { "no": "— 08 / Studio", "title": "Bawabat — generator for storefront banners", "pat": { "Built with": "Satori", "Updates": "monthly" } },
+      { "no": "— 09 / Client", "title": "Confidential luxury e-commerce · UAE", "pat": { "Launch": "Q3", "Scope": "full storefront rebuild" } },
+      { "no": "— 10 / Reading", "title": "Re-reading The Shape of Design", "pat": { "Why": "every few years it grows teeth" } },
+      { "no": "— 11 / Studio", "title": "Tarab — sound design for product motion", "pat": { "Status": "research", "Stack": "Tone.js" } }
+    ]
+  },
+  "capabilities": {
+    "eyebrow": "What I bring to a build",
+    "title": "Services, frankly described.",
+    "subtitle": "Pick a row to lean in. Each engagement is scoped as a fixed-shape engagement to keep momentum predictable.",
+    "items": [
+      { "no": "01", "title": "Frontend engineering", "titleSerif": "engineering", "desc": "Production-grade React / Next / Vue with a real type system, a real test layer, and a real deploy pipeline." },
+      { "no": "02", "title": "Motion choreography", "titleSerif": "choreography", "desc": "GSAP and Framer timelines that earn their place — page transitions, scroll-driven reveals, custom cursors." },
+      { "no": "03", "title": "Arabic typography", "titleSerif": "typography", "desc": "Variable font pairings, baseline grids tuned for Nastaliq and Naskh, kashida-aware readers." },
+      { "no": "04", "title": "Design systems", "titleSerif": "systems", "desc": "Token-first systems with both Figma and code as source of truth, synced via Style Dictionary." },
+      { "no": "05", "title": "Performance audit", "titleSerif": "audit", "desc": "Web Vitals investigation, hydration triage, image strategy, third-party tag surgery." }
+    ]
+  },
+  "stats": {
+    "eyebrow": "By the numbers",
+    "title": "A working",
+    "titleSerif": "record.",
+    "subtitle": "Polished placeholders — overwrite with your real numbers on ship day.",
+    "items": [
+      { "count": 42, "label": "Shipped projects", "desc": "Across four countries" },
+      { "count": 18, "label": "Studios worked with", "desc": "From Cairo to Dubai" },
+      { "count": 6, "label": "Years of practice", "desc": "Self-taught · still learning" },
+      "99/100"
+    ],
+    "lastLabel": "Lighthouse average",
+    "lastDesc": "Across recent builds"
+  },
+  "quote": {
+    "eyebrow": "A working principle",
+    "text": "Restraint first, flourish second, repeat.",
+    "who": "Hussien Essam, in conversation"
   },
   "contact": {
-    "title": "Let's build something quiet and fast.",
-    "lede": "Reach out about a product role, freelance engagement, or just to compare notes.",
-    "emailLabel": "Email",
-    "githubLabel": "GitHub",
-    "linkedinLabel": "LinkedIn"
+    "eyebrow": "Get in touch",
+    "headline": ["Have", "something", "worth", "building", "well?"],
+    "headlineSerif": "something",
+    "headlineAcc": "well?",
+    "ctaStart": "Start the conversation",
+    "ctaReview": "Review work first",
+    "elsewhere": "Elsewhere —",
+    "channels": ["GitHub", "LinkedIn", "Read.cv", "Email"]
   },
   "footer": {
-    "copyright": "© {year} Hussien Essam. All rights reserved.",
-    "builtWith": "Built with Next.js. Deployed on Vercel."
+    "location": "Cairo, EG",
+    "backToTop": "Back to top",
+    "settings": "Settings"
+  },
+  "mobileMenu": {
+    "items": ["About", "Work", "Services", "Contact"],
+    "email": "hello@hussien.dev"
   }
 }
