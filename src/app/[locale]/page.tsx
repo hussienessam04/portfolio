@@ -21,11 +21,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const testimonials = m.testimonials as { eyebrow: string; items: Array<{ quote: string; name: string; role: string }> };
   const contact = m.contact as { eyebrow: string; headline: string[]; headlineSerif: string; headlineAcc: string; ctaStart: string; ctaReview: string; elsewhere: string; channels: string[] };
   const contactForm = m.contactForm as {
-    eyebrow: string; nameLabel: string; namePlaceholder: string;
+    nameLabel: string; namePlaceholder: string;
     emailLabel: string; emailPlaceholder: string;
-    typeLabel: string; typeOptions: Array<{ value: string; label: string }>;
-    scopeLabel: string; scopeOptions: Array<{ value: string; label: string }>;
-    timelineLabel: string; timelineOptions: Array<{ value: string; label: string }>;
     messageLabel: string; messagePlaceholder: string;
     submitLabel: string; submitHint: string;
     privacyNote: string; responseNote: string;
@@ -360,17 +357,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             })}
           </h2>
           <ContactForm
-            eyebrow={contactForm.eyebrow}
             nameLabel={contactForm.nameLabel}
             namePlaceholder={contactForm.namePlaceholder}
             emailLabel={contactForm.emailLabel}
             emailPlaceholder={contactForm.emailPlaceholder}
-            typeLabel={contactForm.typeLabel}
-            typeOptions={contactForm.typeOptions as Array<{ value: string; label: string }>}
-            scopeLabel={contactForm.scopeLabel}
-            scopeOptions={contactForm.scopeOptions as Array<{ value: string; label: string }>}
-            timelineLabel={contactForm.timelineLabel}
-            timelineOptions={contactForm.timelineOptions as Array<{ value: string; label: string }>}
             messageLabel={contactForm.messageLabel}
             messagePlaceholder={contactForm.messagePlaceholder}
             submitLabel={contactForm.submitLabel}
