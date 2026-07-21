@@ -1,5 +1,6 @@
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { LanguageToggle } from './LanguageToggle';
 
 export async function Header({ locale }: { locale: string }) {
   setRequestLocale(locale);
@@ -23,6 +24,7 @@ export async function Header({ locale }: { locale: string }) {
             <a href="#contact" className="reveal" data-cursor="view" data-d="4">{nav.contact}</a>
           </nav>
           <div className="topnav-right">
+            <LanguageToggle />
             <button className="theme-toggle" id="themeBtn" type="button" aria-label={nav.themeToggle} data-cursor="set">
               <svg className="i-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
               <svg className="i-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>

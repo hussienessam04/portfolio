@@ -7,7 +7,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const m = (await getMessages()) as Record<string, unknown>;
   const hero = m.hero as {
     available: string; roles: string[]; phrases: string[]; lead: string;
-    ctaStart: string; ctaSee: string; location: string; multilingual: string; scroll: string;
+    ctaStart: string; ctaSee: string; location: string; yob: string; multilingual: string; scroll: string;
   };
   const marquee = m.marquee as string[];
   const about = m.about as { eyebrow: string; title: string; p1: string; p2: string; quote: string; facts: Array<{ k: string; v: string }> };
@@ -94,7 +94,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="hero-bottom">
             <div className="meta">
               {hero.location}<br />
-              <strong>1998</strong> · {hero.multilingual}
+              <strong>{hero.yob}</strong> · {hero.multilingual}
             </div>
             <span className="scroll-hint"><span className="line" />{hero.scroll}</span>
           </div>

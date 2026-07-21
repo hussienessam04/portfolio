@@ -8,6 +8,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Preloader } from '@/components/Preloader';
 import { Fx } from '@/components/Fx';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import '@/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -67,6 +68,7 @@ export default async function LocaleLayout({
           <Header locale={locale} />
           <main id="main">{children}</main>
           <Footer />
+          <ScrollToTop />
         </NextIntlClientProvider>
       </body>
     </html>
