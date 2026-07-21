@@ -10,6 +10,10 @@ export function Fx() {
     const reduced = REDUCED();
     const cursorOk = CURSOR_OK();
 
+    // ponytail: enable `html.has-custom-cursor` so we can suppress the
+    // native cursor only on devices where we render the custom one.
+    if (cursorOk) document.documentElement.classList.add('has-custom-cursor');
+
     // Scroll progress + nav scrolled state
     const nav = document.getElementById('topnav');
     const progress = document.getElementById('progress');
@@ -29,44 +33,104 @@ export function Fx() {
     // Custom cursor
     const curDot = document.getElementById('curDot');
     const curRing = document.getElementById('curRing');
-    let cx = 0, cy = 0, rx = 0, ry = 0;
+    let cx = 0, cy = 0, rx = 0, ry = 0, rafId = 0;
+
     const onMove = (e: MouseEvent) => {
       cx = e.clientX; cy = e.clientY;
+      // Dot snaps to the pointer — no lerp.
       if (curDot) curDot.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
     };
     window.addEventListener('mousemove', onMove, { passive: true });
-    let rafId = 0;
+
+    // Ring follows with a slightly tighter lerp (0.22) — previous 0.12 felt laggy.
+    const LERP = 0.22;
     const animRing = () => {
-      rx += (cx - rx) * 0.12;
-      ry += (cy - ry) * 0.12;
+      rx += (cx - rx) * LERP;
+      ry += (cy - ry) * LERP;
       if (curRing) curRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
       rafId = requestAnimationFrame(animRing);
     };
     if (cursorOk) rafId = requestAnimationFrame(animRing);
 
+    // Cursor state labels (home / hire / open / set / etc.)
     document.querySelectorAll<HTMLElement>('[data-cursor]').forEach((el) => {
       const label = el.dataset.cursor ?? '';
       el.addEventListener('mouseenter', () => {
         if (!cursorOk || !curRing) return;
         if (['mail', 'hire', 'read', 'open', 'see', 'view', 'ln', 'cv', 'home'].includes(label)) {
           curRing.classList.add('is-big');
-          curRing.classList.remove('is-pill');
+          curRing.classList.remove('is-pill', 'is-press');
           curRing.textContent = label;
         } else if (label === 'set' || label === 'top') {
-          curRing.classList.remove('is-big');
+          curRing.classList.remove('is-big', 'is-press');
           curRing.classList.add('is-pill');
           curRing.textContent = '↗';
         } else {
-          curRing.classList.remove('is-big', 'is-pill');
+          curRing.classList.remove('is-big', 'is-pill', 'is-press');
           curRing.textContent = '';
         }
       });
       el.addEventListener('mouseleave', () => {
         if (!curRing) return;
-        curRing.classList.remove('is-big', 'is-pill');
+        curRing.classList.remove('is-big', 'is-pill', 'is-press');
         curRing.textContent = '';
       });
     });
+
+    // Hide custom cursor over form fields — the OS caret reads better there.
+    if (cursorOk) {
+      const overField = () => {
+        if (curDot) curDot.style.opacity = '0';
+        if (curRing) curRing.style.opacity = '0';
+      };
+      const offField = () => {
+        if (curDot) curDot.style.opacity = '1';
+        if (curRing) curRing.style.opacity = '1';
+      };
+      document.querySelectorAll<HTMLElement>('input, textarea, select').forEach((el) => {
+        el.addEventListener('mouseenter', overField);
+        el.addEventListener('mouseleave', offField);
+        el.addEventListener('focus', overField);
+        el.addEventListener('blur', offField);
+      });
+    }
+
+    // Click ripple + ring press state
+    let rippleCleanup: (() => void) | null = null;
+    if (cursorOk && !reduced) {
+      const spawnRipple = (x: number, y: number) => {
+        const r = document.createElement('div');
+        r.className = 'cur-ripple';
+        r.style.left = `${x}px`;
+        r.style.top = `${y}px`;
+        document.body.appendChild(r);
+        // Ponytail: one-shot CSS-driven expand + fade. No GSAP needed —
+        // a single rAF-driven timeline keeps the bundle smaller.
+        const start = performance.now();
+        const dur = 620;
+        const step = (t: number) => {
+          const p = Math.min(1, (t - start) / dur);
+          const ease = 1 - Math.pow(1 - p, 3);
+          const scale = 1 + ease * 16; // 1 → 17
+          r.style.transform = `translate(-50%, -50%) scale(${scale})`;
+          r.style.opacity = String(0.6 * (1 - p));
+          if (p < 1) requestAnimationFrame(step);
+          else r.remove();
+        };
+        requestAnimationFrame(step);
+      };
+      const onDown = (e: MouseEvent) => {
+        curRing?.classList.add('is-press');
+        if (e.button === 0) spawnRipple(e.clientX, e.clientY);
+      };
+      const onUp = () => curRing?.classList.remove('is-press');
+      window.addEventListener('mousedown', onDown);
+      window.addEventListener('mouseup', onUp);
+      rippleCleanup = () => {
+        window.removeEventListener('mousedown', onDown);
+        window.removeEventListener('mouseup', onUp);
+      };
+    }
 
     // Magnetic
     if (!reduced) {
@@ -132,10 +196,6 @@ export function Fx() {
       }
     }
 
-    // Tape horizontal scroll — owned by ScrollFx via GSAP ScrollTrigger
-    //    (see ScrollFx.tsx). The vanilla handler has been removed to avoid
-    //    double-binding.
-
     // Theme toggle
     const themeBtn = document.getElementById('themeBtn');
     const onThemeClick = () => {
@@ -170,6 +230,8 @@ export function Fx() {
       themeBtn?.removeEventListener('click', onThemeClick);
       mmBtn?.removeEventListener('click', mmClick);
       window.removeEventListener('keydown', onKey);
+      rippleCleanup?.();
+      document.documentElement.classList.remove('has-custom-cursor');
     };
   }, []);
 

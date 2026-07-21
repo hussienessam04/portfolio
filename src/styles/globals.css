@@ -24,8 +24,10 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  transition: background 360ms var(--ease-out), color 360ms var(--ease-out);
+  opacity: 0;
+  transition: opacity 460ms var(--ease-out), background 360ms var(--ease-out), color 360ms var(--ease-out);
 }
+body.ready { opacity: 1; }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
@@ -34,16 +36,46 @@ h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
 
 html[dir="rtl"] body { font-family: "Tajawal", "Inter", system-ui, sans-serif; }
 
+/* ═══ preloader ═══ */
+.pre { position: fixed; inset: 0; background: var(--bg); z-index: 200; display: grid; place-items: center; transition: opacity 900ms var(--ease-in-out), visibility 0s linear 900ms; }
+.pre.hidden { opacity: 0; visibility: hidden; }
+.pre-inner { text-align: center; }
+.pre-name { font-family: var(--font-display); font-size: clamp(40px, 8vw, 96px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0; overflow: hidden; }
+.pre-name span { display: inline-block; transform: translateY(110%); animation: preUp 1200ms var(--ease-out) forwards; }
+.pre-name span:nth-child(2) { animation-delay: 120ms; }
+.pre-name span:nth-child(3) { animation-delay: 220ms; }
+.pre-name span:nth-child(4) { animation-delay: 320ms; }
+.pre-name span:nth-child(5) { animation-delay: 420ms; }
+.pre-name span:nth-child(6) { animation-delay: 520ms; }
+.pre-name span:nth-child(7) { animation-delay: 620ms; }
+@keyframes preUp { to { transform: translateY(0); } }
+.pre-bar { margin-top: 32px; height: 2px; width: 220px; background: color-mix(in oklab, var(--fg), transparent 92%); overflow: hidden; margin-inline: auto; }
+.pre-bar i { display: block; height: 100%; width: 0%; background: var(--accent); animation: preBar 1800ms var(--ease-out) forwards; }
+@keyframes preBar { to { width: 100%; } }
+.pre-cap { margin-top: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
 /* ═══ scroll progress ═══ */
 .progress { position: fixed; inset-block-start: 0; inset-inline-start: 0; height: 3px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: var(--accent); z-index: 95; will-change: transform; }
 
 /* ═══ custom cursor ═══ */
+/* ponytail: cursor enhancements.
+ * - Dot snaps to mouse (no lerp) for accuracy
+ * - Ring lerps at 0.22 for a smooth, responsive follow
+ * - Hidden on form inputs so the native text-cursor shows
+ * - mix-blend-mode: difference keeps the cursor readable on every surface
+ * - Click ripple: a transient ring that pulses from the click point */
 .cur { position: fixed; top: 0; inset-inline-start: 0; pointer-events: none; z-index: 100; mix-blend-mode: difference; }
-.cur-dot { position: fixed; top: 0; inset-inline-start: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--cursor); transform: translate(-50%, -50%); z-index: 101; pointer-events: none; }
-.cur-ring { position: fixed; top: 0; inset-inline-start: 0; width: 42px; height: 42px; border: 1px solid var(--cursor); border-radius: 50%; transform: translate(-50%, -50%); z-index: 100; pointer-events: none; transition: width 480ms var(--ease-out), height 480ms var(--ease-out), border-radius 480ms var(--ease-out), background 320ms var(--ease), border-color 320ms var(--ease); display: grid; place-items: center; color: var(--cursor); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+.cur-dot { position: fixed; top: 0; inset-inline-start: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--cursor); transform: translate(-50%, -50%); z-index: 101; pointer-events: none; box-shadow: 0 0 12px color-mix(in oklab, var(--cursor) 40%, transparent); will-change: transform; }
+.cur-ring { position: fixed; top: 0; inset-inline-start: 0; width: 44px; height: 44px; border: 1px solid var(--cursor); border-radius: 50%; transform: translate(-50%, -50%); z-index: 100; pointer-events: none; transition: width 380ms var(--ease-out), height 380ms var(--ease-out), border-radius 380ms var(--ease-out), background 280ms var(--ease), border-color 280ms var(--ease), opacity 240ms var(--ease); display: grid; place-items: center; color: var(--cursor); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; will-change: transform; }
 .cur-ring.is-big { width: 96px; height: 96px; border-radius: 50%; }
 .cur-ring.is-pill { width: 120px; height: 120px; border-radius: 999px; background: var(--accent); border-color: var(--accent); }
-@media (hover: none), (pointer: coarse) { .cur, .cur-dot, .cur-ring { display: none; } }
+.cur-ring.is-press { width: 32px; height: 32px; border-color: var(--accent); background: color-mix(in oklab, var(--accent) 18%, transparent); }
+.cur-ripple { position: fixed; pointer-events: none; z-index: 99; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--cursor); transform: translate(-50%, -50%) scale(1); opacity: 0.6; mix-blend-mode: difference; }
+@media (hover: none), (pointer: coarse) { .cur, .cur-dot, .cur-ring, .cur-ripple { display: none; } }
+/* Hide custom cursor + native cursor over form fields so the OS text caret shows. */
+html.has-custom-cursor input, html.has-custom-cursor textarea, html.has-custom-cursor select { cursor: text; }
+html.has-custom-cursor,
+html.has-custom-cursor a, html.has-custom-cursor button { cursor: none; }
 
 /* ═══ nav ═══ */
 .topnav { position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 70; padding-block: 18px; transition: padding 320ms var(--ease-out), background 320ms var(--ease-out); }
@@ -155,7 +187,10 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 /* ═══ about — sticky layout ═══ */
 .about { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(48px, 7vw, 112px); align-items: start; }
 .about-side { position: sticky; top: 110px; }
-.about-side h2 { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 600; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 0; }
+/* ponytail: --fs-h2 (44–96px) made 'A practice, not a pipeline.' read as a
+ * billboard that fought the body copy. Rescaled to the same band as the
+ * hero h1 so the about block stays editorial without overflowing the column. */
+.about-side h2 { font-family: var(--font-display); font-size: clamp(32px, 4.5vw, 60px); font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; margin: 16px 0 0; }
 .about-side h2 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
 .about-body { display: flex; flex-direction: column; gap: 32px; }
 .about-p { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.65; color: var(--fg); }

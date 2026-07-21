@@ -8,7 +8,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const m = (await getMessages()) as Record<string, unknown>;
   const hero = m.hero as {
     available: string; roles: string[]; phrases: string[]; lead: string;
-    ctaStart: string; ctaSee: string; location: string; yob: string; multilingual: string; scroll: string;
+    ctaStart: string; ctaSee: string; scroll: string;
   };
   const marquee = m.marquee as string[];
   const about = m.about as { eyebrow: string; title: string; p1: string; p2: string; quote: string; facts: Array<{ k: string; v: string }> };
@@ -21,7 +21,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const quote = m.quote as { eyebrow: string; text: string; who: string };
   const contact = m.contact as { eyebrow: string; headline: string[]; headlineSerif: string; headlineAcc: string; ctaStart: string; ctaReview: string; elsewhere: string; channels: string[] };
   const contactForm = m.contactForm as { eyebrow: string; nameLabel: string; namePlaceholder: string; emailLabel: string; emailPlaceholder: string; messageLabel: string; messagePlaceholder: string; submitLabel: string; submitHint: string };
-  const avail = m.availability as { available: string; nextSlot: string; nextSlotValue: string };
 
   // hero head split-words (EN: "Frontend developer crafting interfaces that live and breathe.")
   const heroLines = locale === 'ar'
@@ -59,11 +58,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="container">
           <div className="hero-grid">
             <div className="hero-meta">
-              <div className="avail">
-                <span className="dot" aria-hidden="true" />
-                <span className="label">{avail.available}</span>
-                <span className="meta">{avail.nextSlot} — {avail.nextSlotValue}</span>
-              </div>
               <h1>
                 {heroLines.map((w, i) => (
                   <span key={i} className={`split-word ${w.cls}`} data-d={i}><span>{w.text}</span></span>
@@ -98,10 +92,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </aside>
           </div>
           <div className="hero-bottom">
-            <div className="meta">
-              {hero.location}<br />
-              <strong>{hero.yob}</strong> · {hero.multilingual}
-            </div>
             <span className="scroll-hint"><span className="line" />{hero.scroll}</span>
           </div>
         </div>
