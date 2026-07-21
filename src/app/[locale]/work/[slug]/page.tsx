@@ -39,8 +39,10 @@ export default async function ProjectPage({
   if (!(routing.locales as readonly string[]).includes(locale)) notFound();
   setRequestLocale(locale);
 
-  const { frontmatter, body } = await getProject(slug, locale as 'en' | 'ar');
-  const t = await getTranslations('work');
+  const [{ frontmatter, body }, t] = await Promise.all([
+    getProject(slug, locale as 'en' | 'ar'),
+    getTranslations('work'),
+  ]);
   const components = useMDXComponents({});
 
   return (

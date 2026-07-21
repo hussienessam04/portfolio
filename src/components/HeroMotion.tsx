@@ -1,14 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+
+gsap.registerPlugin(useGSAP);
 
 export function HeroMotion({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!root.current) return;
-    const ctx = gsap.context(() => {
+  // ponytail: useGSAP handles scope, revertOnUpdate, and cleanup automatically.
+  // Children carry data-hero-* attributes; the ref scopes every selector to this
+  // island. matchMedia() gates the reveals on prefers-reduced-motion.
+  useGSAP(
+    () => {
       const mm = gsap.matchMedia();
 
       mm.add(
@@ -27,10 +32,11 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
           gsap.from('[data-hero-cta]', { opacity: 0, y: 10, duration: 0.5, stagger: 0.06, delay: 0.55, ease: 'power3.out' });
         }
       );
-    }, root);
 
-    return () => ctx.revert();
-  }, []);
+      return () => mm.revert();
+    },
+    { scope: root }
+  );
 
   return <div ref={root}>{children}</div>;
 }

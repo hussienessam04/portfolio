@@ -11,8 +11,10 @@ const STAT_VALUES = ['6+', '14', '11', '3'] as const;
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations();
-  const projects = await getAllProjects(locale as 'en' | 'ar');
+  const [t, projects] = await Promise.all([
+    getTranslations(),
+    getAllProjects(locale as 'en' | 'ar'),
+  ]);
   const featured = projects.filter((p) => p.featured).slice(0, 3);
 
   return (
