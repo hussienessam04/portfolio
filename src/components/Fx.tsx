@@ -132,26 +132,9 @@ export function Fx() {
       }
     }
 
-    // Tape horizontal scroll
-    const tapePin = document.getElementById('tapePin');
-    const tapeTrack = document.getElementById('tapeTrack');
-    if (tapePin && tapeTrack && !reduced) {
-      const updateTape = () => {
-        const r = tapePin.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const pinStart = vh * 0.55;
-        const range = vh * 0.6;
-        let t = 0;
-        if (r.top > pinStart) t = 0;
-        else if (r.top < -r.height + vh * 0.55) t = 1;
-        else t = Math.min(1, Math.max(0, (pinStart - r.top) / range));
-        const total = tapeTrack.scrollWidth - window.innerWidth + 60;
-        tapeTrack.style.transform = `translate3d(${-t * total}px, 0, 0)`;
-      };
-      window.addEventListener('scroll', updateTape, { passive: true });
-      window.addEventListener('resize', updateTape);
-      updateTape();
-    }
+    // Tape horizontal scroll — owned by ScrollFx via GSAP ScrollTrigger
+    //    (see ScrollFx.tsx). The vanilla handler has been removed to avoid
+    //    double-binding.
 
     // Theme toggle
     const themeBtn = document.getElementById('themeBtn');

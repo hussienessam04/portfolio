@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer';
 import { Preloader } from '@/components/Preloader';
 import { Fx } from '@/components/Fx';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { ScrollFx } from '@/components/ScrollFx';
 import '@/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Preloader />
           <Fx />
+          <ScrollFx />
           <a href="#main" className="skip">{locale === 'ar' ? 'تخطّي إلى المحتوى' : 'Skip to content'}</a>
           <Header locale={locale} />
           <main id="main">{children}</main>

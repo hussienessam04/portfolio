@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/navigation';
 import { getMessages, setRequestLocale } from 'next-intl/server';
+import { ContactForm } from '@/components/ContactForm';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -14,9 +15,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const work = m.work as { eyebrow: string; title: string; subtitle: string; cards: Array<{ slug: string; no: string; title: string; desc?: string; art: string; tags: string[]; bgDark?: boolean }> };
   const tape = m.tape as { eyebrow: string; title: string; titleSerif: string; cta: string; cards: Array<{ no: string; title: string; pat: Record<string, string> }> };
   const caps = m.capabilities as { eyebrow: string; title: string; subtitle: string; items: Array<{ no: string; title: string; titleSerif: string; desc: string }> };
+  const process = m.process as { eyebrow: string; title: string; subtitle: string; steps: Array<{ no: string; phase: string; duration: string; text: string }> };
   const stats = m.stats as { eyebrow: string; title: string; titleSerif: string; subtitle: string; items: Array<{ count: number; label: string; desc: string } | string>; lastLabel: string; lastDesc: string };
+  const testimonials = m.testimonials as { eyebrow: string; items: Array<{ quote: string; name: string; role: string }> };
   const quote = m.quote as { eyebrow: string; text: string; who: string };
   const contact = m.contact as { eyebrow: string; headline: string[]; headlineSerif: string; headlineAcc: string; ctaStart: string; ctaReview: string; elsewhere: string; channels: string[] };
+  const contactForm = m.contactForm as { eyebrow: string; nameLabel: string; namePlaceholder: string; emailLabel: string; emailPlaceholder: string; messageLabel: string; messagePlaceholder: string; submitLabel: string; submitHint: string };
+  const avail = m.availability as { available: string; nextSlot: string; nextSlotValue: string };
 
   // hero head split-words (EN: "Frontend developer crafting interfaces that live and breathe.")
   const heroLines = locale === 'ar'
@@ -57,6 +62,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <div className="hero-meta-top">
                 <span className="dot" />
                 <span className="meta">{hero.available}</span>
+              </div>
+              <div className="avail">
+                <span className="dot" aria-hidden="true" />
+                <span className="label">{avail.available}</span>
+                <span className="meta">{avail.nextSlot} — {avail.nextSlotValue}</span>
               </div>
               <h1>
                 {heroLines.map((w, i) => (
@@ -233,6 +243,32 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
+      {/* PROCESS */}
+      <section className="section" id="process">
+        <div className="container">
+          <div className="caps-head">
+            <div>
+              <p className="eyebrow">{process.eyebrow}</p>
+              <h2>{process.title}</h2>
+            </div>
+            <p>{process.subtitle}</p>
+          </div>
+          <div className="process">
+            {process.steps.map((s) => (
+              <div key={s.no} className="process-step reveal">
+                <span className="no">{s.no}</span>
+                <div className="meta">
+                  <h3>{s.phase}</h3>
+                  <span className="duration">{s.duration}</span>
+                </div>
+                <p className="text">{s.text}</p>
+                <span className="num" aria-hidden="true">→</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* STATS */}
       <section className="stats-wrap" id="stats">
         <div className="stats-head">
@@ -268,6 +304,43 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* TESTIMONIALS — paired marquee */}
+      <section className="testimonials" id="testimonials">
+        <div className="testimonials-head">
+          <div>
+            <p className="eyebrow">{testimonials.eyebrow}</p>
+            <h2>
+              {locale === 'ar' ? 'أربع قطع' : 'Four pieces of'}
+              <span className="serif"> {locale === 'ar' ? 'دليل.' : 'proof.'}</span>
+            </h2>
+          </div>
+        </div>
+        <div className="testimonials-track-wrap">
+          <div className="testimonials-track">
+            {testimonials.items.concat(testimonials.items).map((t, i) => (
+              <article key={i} className="testimonial-card">
+                <blockquote>“{t.quote}”</blockquote>
+                <div className="who">
+                  <span className="name">{t.name}</span>
+                  <span className="role">{t.role}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="testimonials-track reverse">
+            {testimonials.items.slice().reverse().concat(testimonials.items.slice().reverse()).map((t, i) => (
+              <article key={i} className="testimonial-card">
+                <blockquote>“{t.quote}”</blockquote>
+                <div className="who">
+                  <span className="name">{t.name}</span>
+                  <span className="role">{t.role}</span>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -307,6 +380,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <a href="#" data-cursor="cv">{(contact.channels as string[])[2]}</a>
             <a href="mailto:hello@hussien.dev" data-cursor="mail">{(contact.channels as string[])[3]}</a>
           </div>
+          <ContactForm
+            eyebrow={contactForm.eyebrow}
+            nameLabel={contactForm.nameLabel}
+            namePlaceholder={contactForm.namePlaceholder}
+            emailLabel={contactForm.emailLabel}
+            emailPlaceholder={contactForm.emailPlaceholder}
+            messageLabel={contactForm.messageLabel}
+            messagePlaceholder={contactForm.messagePlaceholder}
+            submitLabel={contactForm.submitLabel}
+            submitHint={contactForm.submitHint}
+          />
         </div>
       </section>
     </>

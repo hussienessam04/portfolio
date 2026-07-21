@@ -20,7 +20,7 @@ export async function Header({ locale }: { locale: string }) {
           <nav aria-label="primary">
             <a href="#about" className="reveal" data-cursor="view" data-d="1">{nav.about}</a>
             <a href="#work" className="reveal" data-cursor="view" data-d="2">{nav.work}</a>
-            <a href="#capabilities" className="reveal" data-cursor="view" data-d="3">{nav.services}</a>
+            <a href="#process" className="reveal" data-cursor="view" data-d="3">{nav.services}</a>
             <a href="#contact" className="reveal" data-cursor="view" data-d="4">{nav.contact}</a>
           </nav>
           <div className="topnav-right">
@@ -37,7 +37,7 @@ export async function Header({ locale }: { locale: string }) {
         <div className="mm-inner">
           <a href="#about" style={{ ['--i' as string]: 0 }}>{menu.items[0]}</a>
           <a href="#work" style={{ ['--i' as string]: 1 }}>{menu.items[1]}</a>
-          <a href="#capabilities" style={{ ['--i' as string]: 2 }}>{menu.items[2]}</a>
+          <a href="#process" style={{ ['--i' as string]: 2 }}>{menu.items[2]}</a>
           <a href="#contact" style={{ ['--i' as string]: 3 }}>{menu.items[3]}</a>
           <div className="mm-meta">
             <a href={`mailto:${menu.email}`}>{menu.email}</a>

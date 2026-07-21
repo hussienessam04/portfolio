@@ -158,5 +158,42 @@
   "mobileMenu": {
     "items": ["About", "Work", "Services", "Contact"],
     "email": "hello@hussien.dev"
+  },
+  "process": {
+    "eyebrow": "How a build moves",
+    "title": "An honest four-step rhythm.",
+    "subtitle": "No sprints, no surprise invoices, no AI-generated strategy deck. Just a clear sequence I run with every team I work with.",
+    "steps": [
+      { "no": "01", "phase": "Listen", "duration": "Days 1–3", "text": "A long call. I learn the team, the user, the constraint, the politics. I leave with a written brief." },
+      { "no": "02", "phase": "Shape", "duration": "Days 4–7", "text": "A static wireframe at three viewport widths. You red-pen it. I do not start a single component until we agree." },
+      { "no": "03", "phase": "Build", "duration": "Weeks 2–6", "text": "Vertical slices, weekly demos, real content. Nothing ships behind a feature flag for more than a week." },
+      { "no": "04", "phase": "Tune", "duration": "Weeks 7–8", "text": "Lighthouse, real-device testing, the awkward edge cases. I hand over a repo you can actually own." }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "Words from people I've worked with",
+    "items": [
+      { "quote": "Hussien rewrote our component library and our engineering culture in the same quarter. I've never seen a frontend engineer raise the bar for design and product at the same time.", "name": "Yara Mansour", "role": "Head of Product, Souqly" },
+      { "quote": "The only contractor I trust to ship motion that doesn't feel like motion for its own sake. He writes code a senior reviewer actually wants to merge.", "name": "Omar Khalil", "role": "Staff Engineer, Linear" },
+      { "quote": "He sits between design and engineering in a way most people can't. We hand him a Figma file and get back a product that behaves the way the file implied.", "name": "Layla Ibrahim", "role": "Design Director, Tabib" },
+      { "quote": "Three launches, zero rollbacks. The kind of frontend partner you stop worrying about because the work is always right.", "name": "Karim Saeed", "role": "CTO, Mawrid" }
+    ]
+  },
+  "contactForm": {
+    "eyebrow": "Or send a note",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Salma Hassan",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@company.com",
+    "messageLabel": "What you're working on",
+    "messagePlaceholder": "A product, a problem, a deadline — anything you'd like to share.",
+    "submitLabel": "Send via email",
+    "submitHint": "Opens your mail client — no server, no tracking."
+  },
+  "availability": {
+    "available": "Available",
+    "booked": "Booked",
+    "nextSlot": "Next slot",
+    "nextSlotValue": "Q2 2026"
   }
 }
