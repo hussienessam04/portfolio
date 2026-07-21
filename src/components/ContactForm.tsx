@@ -10,8 +10,6 @@ type Props = {
   messageLabel: string;
   messagePlaceholder: string;
   submitLabel: string;
-  submitHint: string;
-  privacyNote: string;
   responseNote: string;
 };
 
@@ -83,10 +81,7 @@ export function ContactForm(props: Props) {
         <button type="submit" className="btn btn-solid magnetic" data-cursor="mail">
           {props.submitLabel}<span className="arr">→</span>
         </button>
-        <p className="contact-form-privacy">{props.privacyNote}</p>
       </div>
-
-      <p className="contact-form-subhint">{props.submitHint}</p>
     </form>
   );
 }

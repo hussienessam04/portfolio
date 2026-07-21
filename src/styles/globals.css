@@ -429,10 +429,8 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 .cf-field input::placeholder, .cf-field textarea::placeholder { color: color-mix(in oklab, var(--muted) 60%, transparent); }
 .cf-field textarea { min-height: 140px; line-height: 1.55; resize: vertical; }
 
-.contact-form-footer { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-block-start: 6px; }
-.contact-form-footer .btn { padding: 14px 22px; }
-.contact-form-privacy { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); flex: 1 1 240px; }
-.contact-form-subhint { margin: 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in oklab, var(--muted) 70%, transparent); text-align: center; }
+.contact-form-footer { display: flex; justify-content: center; margin-block-start: 10px; }
+.contact-form-footer .btn { padding: 14px 26px; font-size: 15px; }
 
 @media (max-width: 560px) {
   .contact-form-row { grid-template-columns: 1fr; }

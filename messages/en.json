@@ -187,8 +187,6 @@
     "messageLabel": "Tell me about the work",
     "messagePlaceholder": "What you're building, the deadline, the team. Anything that helps me picture the build.",
     "submitLabel": "Send via email",
-    "submitHint": "Opens your mail client — no server, no tracking.",
-    "privacyNote": "Your message goes directly to my inbox. No CRM, no newsletter, no third party.",
     "responseNote": "I reply within one business day, usually faster."
   },
   "availability": {

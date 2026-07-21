@@ -24,8 +24,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     nameLabel: string; namePlaceholder: string;
     emailLabel: string; emailPlaceholder: string;
     messageLabel: string; messagePlaceholder: string;
-    submitLabel: string; submitHint: string;
-    privacyNote: string; responseNote: string;
+    submitLabel: string;
+    responseNote: string;
   };
 
   // hero head split-words (EN: "Frontend developer crafting interfaces that live and breathe.")
@@ -364,8 +364,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             messageLabel={contactForm.messageLabel}
             messagePlaceholder={contactForm.messagePlaceholder}
             submitLabel={contactForm.submitLabel}
-            submitHint={contactForm.submitHint}
-            privacyNote={contactForm.privacyNote}
             responseNote={contactForm.responseNote}
           />
           <div className="contact-channels">
