@@ -58,19 +58,27 @@ html[dir="rtl"] body { font-family: "Tajawal", "Inter", system-ui, sans-serif; }
 .progress { position: fixed; inset-block-start: 0; inset-inline-start: 0; height: 3px; width: 100%; transform: scaleX(0); transform-origin: 0 50%; background: var(--accent); z-index: 95; will-change: transform; }
 
 /* ═══ custom cursor ═══ */
-/* ponytail: cursor enhancements.
- * - Dot snaps to mouse (no lerp) for accuracy
- * - Ring lerps at 0.22 for a smooth, responsive follow
- * - Hidden on form inputs so the native text-cursor shows
- * - mix-blend-mode: difference keeps the cursor readable on every surface
- * - Click ripple: a transient ring that pulses from the click point */
-.cur { position: fixed; top: 0; inset-inline-start: 0; pointer-events: none; z-index: 100; mix-blend-mode: difference; }
-.cur-dot { position: fixed; top: 0; inset-inline-start: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--cursor); transform: translate(-50%, -50%); z-index: 101; pointer-events: none; box-shadow: 0 0 12px color-mix(in oklab, var(--cursor) 40%, transparent); will-change: transform; }
-.cur-ring { position: fixed; top: 0; inset-inline-start: 0; width: 44px; height: 44px; border: 1px solid var(--cursor); border-radius: 50%; transform: translate(-50%, -50%); z-index: 100; pointer-events: none; transition: width 380ms var(--ease-out), height 380ms var(--ease-out), border-radius 380ms var(--ease-out), background 280ms var(--ease), border-color 280ms var(--ease), opacity 240ms var(--ease); display: grid; place-items: center; color: var(--cursor); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; will-change: transform; }
+/* ponytail: cursor enhancements — always visible on any background.
+ * - Removed `mix-blend-mode: difference` (it was the source of "sometimes
+ *   visible, sometimes not" — on same-color backgrounds the inversion
+ *   matched the page and the cursor vanished).
+ * - Each layer now wears a contrasting outline via `box-shadow`:
+ *     white cursor on dark theme gets a thin black halo,
+ *     black cursor on light theme gets a thin white halo.
+ *   The halo sits BETWEEN the cursor and the page, so the cursor is
+ *   always readable on any surface.
+ * - Dot has a soft glow shadow for depth.
+ * - Ring transitions its color smoothly on hover-state changes. */
+.cur { position: fixed; top: 0; inset-inline-start: 0; pointer-events: none; z-index: 100; }
+.cur-dot { position: fixed; top: 0; inset-inline-start: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--cursor); transform: translate(-50%, -50%); z-index: 101; pointer-events: none; box-shadow: 0 0 0 1.5px var(--bg), 0 0 14px color-mix(in oklab, var(--cursor) 50%, transparent); will-change: transform; transition: transform 120ms var(--ease-out); }
+.cur-dot.is-hover { transform: translate(-50%, -50%) scale(0.6); }
+.cur-ring { position: fixed; top: 0; inset-inline-start: 0; width: 44px; height: 44px; border: 1.5px solid var(--cursor); border-radius: 50%; transform: translate(-50%, -50%); z-index: 100; pointer-events: none; transition: width 380ms var(--ease-out), height 380ms var(--ease-out), border-radius 380ms var(--ease-out), background 280ms var(--ease), border-color 280ms var(--ease), color 280ms var(--ease), opacity 240ms var(--ease); display: grid; place-items: center; color: var(--cursor); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; will-change: transform; box-shadow: 0 0 0 1px var(--bg); }
 .cur-ring.is-big { width: 96px; height: 96px; border-radius: 50%; }
-.cur-ring.is-pill { width: 120px; height: 120px; border-radius: 999px; background: var(--accent); border-color: var(--accent); }
+.cur-ring.is-pill { width: 120px; height: 120px; border-radius: 999px; background: var(--accent); border-color: var(--accent); color: var(--accent-on); box-shadow: 0 0 0 1px var(--bg); }
+.cur-ring.is-pill::before { content: ""; position: absolute; inset: -3px; border-radius: inherit; border: 1px solid var(--accent); opacity: 0.4; }
 .cur-ring.is-press { width: 32px; height: 32px; border-color: var(--accent); background: color-mix(in oklab, var(--accent) 18%, transparent); }
-.cur-ripple { position: fixed; pointer-events: none; z-index: 99; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--cursor); transform: translate(-50%, -50%) scale(1); opacity: 0.6; mix-blend-mode: difference; }
+.cur-ring.is-press.is-big, .cur-ring.is-press.is-pill { width: 40px; height: 40px; }
+.cur-ripple { position: fixed; pointer-events: none; z-index: 99; width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--cursor); transform: translate(-50%, -50%) scale(1); opacity: 0.6; box-shadow: 0 0 0 1px var(--bg); }
 @media (hover: none), (pointer: coarse) { .cur, .cur-dot, .cur-ring, .cur-ripple { display: none; } }
 /* Hide custom cursor + native cursor over form fields so the OS text caret shows. */
 html.has-custom-cursor input, html.has-custom-cursor textarea, html.has-custom-cursor select { cursor: text; }
@@ -205,7 +213,11 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 
 /* ═══ bento work grid ═══ */
 .work-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: var(--gap-xl); flex-wrap: wrap; }
-.work-head h2 { font-family: var(--font-display); font-size: var(--fs-h1); font-weight: 700; line-height: 0.95; letter-spacing: -0.04em; margin: 12px 0 0; max-inline-size: 14ch; }
+/* ponytail: --fs-h1 (56–144px) made section h2s ('Builds that quietly do
+ * their job.' / 'Services, frankly described.' / 'An honest four-step
+ * rhythm.') fight the bento + capabilities + process rows below. Rescaled
+ * to the same band as the hero h1. */
+.work-head h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 72px); font-weight: 700; line-height: 1.02; letter-spacing: -0.03em; margin: 12px 0 0; max-inline-size: 14ch; }
 .work-head h2 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
 .work-head p { color: var(--muted); max-inline-size: 36ch; font-size: 16px; }
 .bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(180px, auto); gap: 16px; }
@@ -271,7 +283,7 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 
 /* ═══ capabilities — list ═══ */
 .caps-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: var(--gap-xl); flex-wrap: wrap; }
-.caps-head h2 { font-family: var(--font-display); font-size: var(--fs-h1); font-weight: 700; line-height: 0.95; letter-spacing: -0.04em; margin: 12px 0 0; max-inline-size: 14ch; }
+.caps-head h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 72px); font-weight: 700; line-height: 1.02; letter-spacing: -0.03em; margin: 12px 0 0; max-inline-size: 14ch; }
 .caps-head h2 .serif { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
 .caps-head p { color: var(--muted); max-inline-size: 36ch; }
 .caps { border-top: 1px solid var(--border); }
@@ -305,8 +317,10 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 .quote { text-align: center; padding-block: var(--gap-2xl); max-inline-size: 980px; margin-inline: auto; }
 .quote .eyebrow { justify-content: center; }
 .quote .eyebrow::before { display: none; }
-.quote mark { background: transparent; color: var(--fg); font-family: var(--font-serif); font-style: italic; font-size: clamp(28px, 4vw, 56px); line-height: 1.2; letter-spacing: -0.015em; display: inline; }
-.quote .who { display: block; margin-top: 36px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+/* ponytail: 56px serif italic read as a billboard. Rescaled so the quote
+ * reads as a quiet aphorism, not a headline. */
+.quote mark { background: transparent; color: var(--fg); font-family: var(--font-serif); font-style: italic; font-size: clamp(22px, 3.2vw, 40px); line-height: 1.25; letter-spacing: -0.01em; display: inline; }
+.quote .who { display: block; margin-top: 32px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .quote mark::before { content: "\201C"; }
 .quote mark::after { content: " \201D"; color: var(--accent); }
 
@@ -314,7 +328,9 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 .contact { text-align: center; padding-block: var(--gap-2xl); position: relative; overflow: hidden; }
 .contact .eyebrow { justify-content: center; }
 .contact .eyebrow::before { display: none; }
-.contact h2 { font-family: var(--font-display); font-size: var(--fs-mega); font-weight: 700; line-height: 0.92; letter-spacing: -0.045em; margin: 24px 0 32px; color: var(--fg); }
+/* ponytail: --fs-mega (72–200px) made 'Have something worth building well?'
+ * run off the screen and into the form below. Halved at 1440px. */
+.contact h2 { font-family: var(--font-display); font-size: clamp(40px, 6vw, 84px); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; margin: 24px 0 32px; color: var(--fg); text-wrap: balance; }
 .contact h2 .lt { display: inline-block; }
 .contact h2 .lt.serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
 .contact h2 .lt.acc { color: var(--accent); font-family: var(--font-serif); font-style: italic; font-weight: 400; }

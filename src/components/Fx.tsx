@@ -56,7 +56,10 @@ export function Fx() {
     document.querySelectorAll<HTMLElement>('[data-cursor]').forEach((el) => {
       const label = el.dataset.cursor ?? '';
       el.addEventListener('mouseenter', () => {
-        if (!cursorOk || !curRing) return;
+        if (!cursorOk) return;
+        // Shrink the dot so the ring's label / shape is the focus.
+        curDot?.classList.add('is-hover');
+        if (!curRing) return;
         if (['mail', 'hire', 'read', 'open', 'see', 'view', 'ln', 'cv', 'home'].includes(label)) {
           curRing.classList.add('is-big');
           curRing.classList.remove('is-pill', 'is-press');
@@ -71,6 +74,7 @@ export function Fx() {
         }
       });
       el.addEventListener('mouseleave', () => {
+        curDot?.classList.remove('is-hover');
         if (!curRing) return;
         curRing.classList.remove('is-big', 'is-pill', 'is-press');
         curRing.textContent = '';
