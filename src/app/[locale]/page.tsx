@@ -59,10 +59,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="container">
           <div className="hero-grid">
             <div className="hero-meta">
-              <div className="hero-meta-top">
-                <span className="dot" />
-                <span className="meta">{hero.available}</span>
-              </div>
               <div className="avail">
                 <span className="dot" aria-hidden="true" />
                 <span className="label">{avail.available}</span>

@@ -116,11 +116,12 @@ a:focus-visible, button:focus-visible, .magnetic:focus-visible { outline: 2px so
 .hero-meta { display: flex; flex-direction: column; gap: 24px; align-self: end; }
 .hero-meta-top { display: flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
 .hero-meta-top .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-/* ponytail: hero h1 was using --fs-mega (clamp 72–200px), which read as a billboard
- * and pushed the editorial copy off the screen. Rescaled to fs-h1's band and
- * tightened the line so the 8 split-words sit between the rotator and the CTA. */
-.hero-meta h1 { font-family: var(--font-display); font-size: clamp(44px, 7vw, 104px); font-weight: 700; line-height: 0.98; letter-spacing: -0.035em; margin: 0; color: var(--fg); text-wrap: balance; }
-.hero-meta h1 .lt { display: inline-block; line-height: 0.98; }
+/* ponytail: hero h1 rescaled. --fs-mega (72–200px) read as a billboard,
+ * clamp(44, 7vw, 104) was still too aggressive — words spilled past the
+ * column and pushed the rotator/CTA below the fold. Editorial copy reads at
+ * ~60% of the original size without losing the split-word choreography. */
+.hero-meta h1 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 68px); font-weight: 700; line-height: 1.04; letter-spacing: -0.03em; margin: 0; color: var(--fg); text-wrap: balance; }
+.hero-meta h1 .lt { display: inline-block; line-height: 1.04; }
 .hero-meta h1 .lt.serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
 .hero-roles { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .hero-roles .sep { color: var(--border); }
